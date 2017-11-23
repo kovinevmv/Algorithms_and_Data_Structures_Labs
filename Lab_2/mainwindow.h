@@ -20,13 +20,7 @@ private:
     data_container *data;
 
 private slots:
-    void slotOpen();
-    void slotSave();
-    void activate_button();
-    void make_action();
-    void mov_top();
-    void programm_info();
-    void auth_info();
+
     void on_inputText_textChanged();
     void on_actionButton_clicked();
     void print(bool);
