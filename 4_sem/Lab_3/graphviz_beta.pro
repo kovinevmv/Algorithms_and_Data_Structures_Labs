@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-02-12T23:02:20
+# Project created by QtCreator 2018-02-23T20:43:52
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = lab_2
+TARGET = graphviz_beta
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    stringtograph.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    stringtograph.h
 
 FORMS += \
         mainwindow.ui
