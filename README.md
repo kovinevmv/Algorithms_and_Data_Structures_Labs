@@ -1,4 +1,4 @@
-# Algorithms_and_Data_Structures_Labs
+# ProgrammingLETI6304
 
 Список лабораторных работ:
 
