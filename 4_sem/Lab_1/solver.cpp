@@ -8,11 +8,6 @@
 #include<ctime>
 #include <vector>
 
-
-#include <QDebug>
-
-
-
 int width = 300;
 int M = 20;
 
@@ -65,8 +60,6 @@ RGBPIXEL setcolor(int n)
         default: {currentColor.rgbRed = rand() % 255; currentColor.rgbGreen = rand() % 255; currentColor.rgbBlue = rand() % 255; return (currentColor); break; }
         }
     }
-
-
 
 }
 

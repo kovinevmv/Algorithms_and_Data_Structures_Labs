@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1127</width>
-    <height>392</height>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,13 +31,17 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
-      <width>171</width>
-      <height>21</height>
+      <y>80</y>
+      <width>181</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Рассчитать</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/search.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/search.png</iconset>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
@@ -45,7 +49,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>171</width>
+      <width>181</width>
       <height>23</height>
      </rect>
     </property>
@@ -60,7 +64,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Введите сторону квадрата</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Введите сторону квадрата&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton">
@@ -86,9 +90,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
+      <y>222</y>
       <width>181</width>
-      <height>23</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="value">
@@ -131,33 +135,41 @@
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Финальный результат&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Финальный результат&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_next">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>350</y>
-      <width>91</width>
-      <height>23</height>
+      <x>420</x>
+      <y>340</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Следующий</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_prev">
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>350</y>
-      <width>91</width>
-      <height>23</height>
+      <y>340</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Предыдущий</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go1.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go1.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -165,34 +177,42 @@
      <rect>
       <x>10</x>
       <y>280</y>
-      <width>171</width>
-      <height>23</height>
+      <width>181</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Справка</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/info.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/info.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>310</y>
-      <width>171</width>
-      <height>23</height>
+      <y>320</y>
+      <width>181</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>О программе</string>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/qt.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/qt.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>350</y>
-      <width>75</width>
-      <height>23</height>
+      <x>30</x>
+      <y>380</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -216,7 +236,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>205</y>
+      <y>160</y>
       <width>171</width>
       <height>31</height>
      </rect>

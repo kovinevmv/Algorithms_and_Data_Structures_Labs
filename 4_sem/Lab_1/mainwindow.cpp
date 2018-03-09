@@ -52,7 +52,7 @@ void MainWindow::on_pushButton_clicked()
          ui->Current->clear();
          ui->Current->setPixmap(image1);
 
-         window()->setFixedSize(1150,390);
+         window()->setFixedSize(1150,420);
          ui->warning->setText("Генерация завершена.\nУспех!");
      }
      else
@@ -62,7 +62,7 @@ void MainWindow::on_pushButton_clicked()
           ui->progressBar->setValue(0);
           ui->warning->setText("Невозможно решить задачу.\nВведите меньшее число");
           ui->step->setText("Шаг 1");
-          window()->setFixedSize(190,390);
+          window()->setFixedSize(207,420);
 
      }
 }

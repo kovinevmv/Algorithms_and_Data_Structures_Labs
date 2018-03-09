@@ -6,6 +6,7 @@
 #include "stringtograph.h"
 
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -41,8 +42,7 @@ void MainWindow::on_createGraph_clicked()
         {
             if (b[i][j] != 0)
             {
-                QString pathQString = QString::number(i+1) + " -> " + QString::number(j+1) + 
-                                        " [label=\"" +  QString::number(b[i][j]) + "\"];\n";
+                QString pathQString = QString::number(i+1) + " -> " + QString::number(j+1) + " [label=\"" +  QString::number(b[i][j]) + "\"];\n";
                 string pathString = pathQString.toLocal8Bit().constData();
                 f << pathString;
             }
@@ -88,8 +88,7 @@ void MainWindow::newrender(int **F, int N, int* array)
 {
         generateDotFile(F, N, array, headerDot);
 
-        system("CD /D \"D:\Documents\Qt Projects\build-graphviz_beta-Desktop_Qt_5_10_0_MinGW_32bit-Debug\" 
-               & dot -Gsize=3,3\! -Gdpi=300 -Tpng dot2.dot -o rendered.png");
+        system("CD /D \"D:\Documents\Qt Projects\build-graphviz_beta-Desktop_Qt_5_10_0_MinGW_32bit-Debug\" & dot -Gsize=3,3\! -Gdpi=300 -Tpng dot2.dot -o rendered.png");
 
         QPixmap image("rendered.png");
         ui->label->setPixmap(image);

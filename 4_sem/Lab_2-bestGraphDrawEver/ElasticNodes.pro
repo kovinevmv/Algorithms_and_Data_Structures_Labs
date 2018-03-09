@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-02-12T23:02:20
+# Project created by QtCreator 2018-03-06T19:19:54
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = lab_2
+TARGET = ElasticNodes
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,10 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    edge.cpp \
+    graphwidget.cpp \
+    node.cpp \
+    biconnected.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    edge.h \
+    graphwidget.h \
+    node.h \
+    biconnected.h
 
 FORMS += \
         mainwindow.ui
