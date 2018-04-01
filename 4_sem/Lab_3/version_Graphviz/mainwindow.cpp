@@ -56,7 +56,7 @@ void MainWindow::on_createGraph_clicked()
 
     QPixmap image("main.png");
     ui->label->setPixmap(image);
-    ui->label->repaint();
+    //ui->label->repaint();
     ui->scrollArea->setWidget(ui->label);
 
     window()->setFixedSize(1050, 660);

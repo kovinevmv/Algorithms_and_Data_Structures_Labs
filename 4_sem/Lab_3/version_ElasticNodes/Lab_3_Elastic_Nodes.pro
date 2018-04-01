@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-02-10T22:20:54
+# Project created by QtCreator 2018-04-01T14:32:58
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = newviewer
+TARGET = Lab_3_Elastic_Nodes
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,13 +26,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    solver.cpp \
-    helpbrowser.cpp
+    edge.cpp \
+    graphwidget.cpp \
+    helpbrowser.cpp \
+    node.cpp \
+    biconnected.cpp
 
 HEADERS += \
         mainwindow.h \
-    solver.h \
-    helpbrowser.h
+    edge.h \
+    graphwidget.h \
+    helpbrowser.h \
+    node.h \
+    biconnected.h
 
 FORMS += \
         mainwindow.ui

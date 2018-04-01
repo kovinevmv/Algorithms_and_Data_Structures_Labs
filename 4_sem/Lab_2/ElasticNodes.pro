@@ -1,14 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-02-10T22:20:54
+# Project created by QtCreator 2018-03-06T19:19:54
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = newviewer
+TARGET = ElasticNodes
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,16 +27,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    solver.cpp \
+    edge.cpp \
+    graphwidget.cpp \
+    node.cpp \
+    biconnected.cpp \
     helpbrowser.cpp
 
 HEADERS += \
         mainwindow.h \
-    solver.h \
+    edge.h \
+    graphwidget.h \
+    node.h \
+    biconnected.h \
     helpbrowser.h
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
-    resources.qrc
+    resource.qrc

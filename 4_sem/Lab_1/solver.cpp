@@ -20,9 +20,11 @@ int N;
 bool a[55][55];
 int r[55][55], d[55][55];
 int changecolor = 1;
-QProgressBar *q;
-QLabel *qq;
+QProgressBar *progressBar;
+QLabel *label;
 
+
+// Установка цвета на квадраты
 RGBPIXEL setcolor(int n)
 {
     RGBPIXEL currentColor;
@@ -38,11 +40,11 @@ RGBPIXEL setcolor(int n)
 
         switch (n)
         {
-        case 0:  {currentColor.rgbRed = 255; currentColor.rgbGreen = 215; currentColor.rgbBlue = 0;   return (currentColor); break; }
+        case 0:  {currentColor.rgbRed = 230; currentColor.rgbGreen = 230; currentColor.rgbBlue = 255;   return (currentColor); break; }
         case 1:  {currentColor.rgbRed = 0;   currentColor.rgbGreen = 128; currentColor.rgbBlue = 128; return (currentColor); break; }
         case 2:  {currentColor.rgbRed = 211; currentColor.rgbGreen = 255; currentColor.rgbBlue = 206; return (currentColor); break; }
         case 3:  {currentColor.rgbRed = 255; currentColor.rgbGreen = 165; currentColor.rgbBlue = 0;   return (currentColor); break; }
-        case 4:  {currentColor.rgbRed = 230; currentColor.rgbGreen = 230; currentColor.rgbBlue = 255; return (currentColor); break; }
+        case 4:  {currentColor.rgbRed = 191; currentColor.rgbGreen = 214; currentColor.rgbBlue = 65; return (currentColor); break; }
         case 5:  {currentColor.rgbRed = 0;   currentColor.rgbGreen = 51;  currentColor.rgbBlue = 102; return (currentColor); break; }
         case 6:  {currentColor.rgbRed = 250; currentColor.rgbGreen = 128; currentColor.rgbBlue = 114; return (currentColor); break; }
         case 7:  {currentColor.rgbRed = 8;   currentColor.rgbGreen = 141; currentColor.rgbBlue = 165; return (currentColor); break; }
@@ -55,7 +57,7 @@ RGBPIXEL setcolor(int n)
         case 14: {currentColor.rgbRed = 111; currentColor.rgbGreen = 159; currentColor.rgbBlue = 216; return (currentColor); break; }
         case 15: {currentColor.rgbRed = 0;   currentColor.rgbGreen = 165; currentColor.rgbBlue = 145; return (currentColor); break; }
         case 16: {currentColor.rgbRed = 234; currentColor.rgbGreen = 222; currentColor.rgbBlue = 219; return (currentColor); break; }
-        case 17: {currentColor.rgbRed = 191; currentColor.rgbGreen = 214; currentColor.rgbBlue = 65;  return (currentColor); break; }
+        case 17: {currentColor.rgbRed = 255; currentColor.rgbGreen = 214; currentColor.rgbBlue = 0;  return (currentColor); break; }
 
         default: {currentColor.rgbRed = rand() % 255; currentColor.rgbGreen = rand() % 255; currentColor.rgbBlue = rand() % 255; return (currentColor); break; }
         }
@@ -63,9 +65,14 @@ RGBPIXEL setcolor(int n)
 
 }
 
+
+// Создание матрицы квадратов с цветом
 void addColorToMatrix(squareCoord curCoord, vector<vector<RGBPIXEL>> &a)
 {
+    // Установка цвета
     RGBPIXEL n = setcolor(color);
+
+    // Заливка области
     for (int i = factor*(curCoord.x - 1); i < factor * (curCoord.size + curCoord.x - 1); i++)
     {
         for (int j = factor*(curCoord.y - 1); j < factor * (curCoord.size + curCoord.y - 1); j++)
@@ -73,6 +80,9 @@ void addColorToMatrix(squareCoord curCoord, vector<vector<RGBPIXEL>> &a)
             a[i][j] = n;
         }
     }
+
+
+    // Черная рамка вокруг квадрата
     RGBPIXEL nn;
     nn.rgbBlue = 0;
     nn.rgbGreen = 0;
@@ -93,6 +103,8 @@ void addColorToMatrix(squareCoord curCoord, vector<vector<RGBPIXEL>> &a)
 
 void building(int x, int y, int size, vector<vector<RGBPIXEL>> &a)
 {
+    // Создание объекта квадрата
+    // Занесение данных в структуру квадрата
     squareCoord temp;
     temp.x = x;
     temp.y = y;
@@ -100,6 +112,8 @@ void building(int x, int y, int size, vector<vector<RGBPIXEL>> &a)
     addColorToMatrix(temp, a);
 }
 
+
+// Сохранение матрицы как картинку с расширением ppm
 void saveAsPPM(vector<vector<RGBPIXEL>> &b, int i)
 {
     char fileNameIndex[3];
@@ -156,12 +170,13 @@ inline void backtracking(int x, int y, int sum, int S, vector<vector<RGBPIXEL>> 
     }
     if (x>N)
     {
+        // Сохраняем новое приближение
         M = sum;
         memcpy(ans, tmp, sizeof(AS)*M);
         for (int i = 0; i<M; ++i)
             building(ans[i].x, ans[i].y, ans[i].len, b);
         saveAsPPM(b, index);
-        q->setValue(index*10);
+        progressBar->setValue(index*10);
         index++;
         return;
     }
@@ -269,12 +284,17 @@ inline void backtracking(int x, int y, int sum, int S, vector<vector<RGBPIXEL>> 
 }
 
 
-int mainsolver(int t, int changecolore, QProgressBar *rr, QLabel *rrr)
+int mainsolver(int t, int changecolore, QProgressBar *my_progressBar, QLabel *my_label)
 {
-    q=rr;
-    qq=rrr;
-    q->setValue(0);
+    progressBar=my_progressBar;
+    label=my_label;
+
+    // Установка QProgressBar
+    progressBar->setValue(0);
+
     changecolor = changecolore;
+
+    // Выделение памяти
     memset(f, 127, sizeof(f));
     f[0] = 0;
     for (int i = 1; i <= 2500; ++i)
@@ -288,28 +308,30 @@ int mainsolver(int t, int changecolore, QProgressBar *rr, QLabel *rrr)
     N = 0;
     color = 0;
     index = 1;
-
     N = t;
 
     factor = (int)(width / t);
 
-
     vector<vector<RGBPIXEL>> b(N*factor, vector<RGBPIXEL>(N*factor));
 
+
+    // Вызов функции backstrackingа
     memset(a, 0, sizeof(a));
     backtracking(1, 1, 0, N*N, b);
 
 
-    qq->setText("Минимальное число\nквадратов: " + QString::number(M) + "\n\n");
+
+    // Вывод сообщения о всех квадратах и их координатах в QLabel
+    label->setText("Минимальное число\nквадратов: " + QString::number(M) + "\n\n");
     for (int i = 0; i < M; ++i)
     {
        building(ans[i].x, ans[i].y, ans[i].len, b);
-       qq->setText(qq->text() + QString::number(i+1) + ". Вершина: (" + QString::number(ans[i].x) + "," + QString::number(ans[i].y) + ") Длина: "+ QString::number(ans[i].len) + "\n\n");
+       label->setText(label->text() + QString::number(i+1) + ". Вершина: (" + QString::number(ans[i].x) + "," + QString::number(ans[i].y) + ") Длина: "+ QString::number(ans[i].len) + "\n\n");
     }
     saveAsPPM(b, 0);
     b.clear();
 
-    q->setValue(100);
+    progressBar->setValue(100);
 
     return index;
 }

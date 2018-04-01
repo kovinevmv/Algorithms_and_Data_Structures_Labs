@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1127</width>
-    <height>436</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,8 +40,8 @@
      <string>Рассчитать</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/search.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/search.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/images/images/search.png</normaloff>:/images/images/search.png</iconset>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
@@ -90,7 +90,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>222</y>
+      <y>282</y>
       <width>181</width>
       <height>41</height>
      </rect>
@@ -103,7 +103,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>200</y>
+      <y>260</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -129,7 +129,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>350</y>
+      <y>360</y>
       <width>341</width>
       <height>21</height>
      </rect>
@@ -142,7 +142,7 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>340</y>
+      <y>430</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -151,15 +151,15 @@
      <string>Следующий</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/images/images/go.png</normaloff>:/images/images/go.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_prev">
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>340</y>
+      <y>430</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -168,15 +168,15 @@
      <string>Предыдущий</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go1.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/debug/images/go1.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/images/images/go1.png</normaloff>:/images/images/go1.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>280</y>
+      <y>340</y>
       <width>181</width>
       <height>41</height>
      </rect>
@@ -185,15 +185,15 @@
      <string>Справка</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/info.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/info.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/images/images/info.png</normaloff>:/images/images/info.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
+      <y>380</y>
       <width>181</width>
       <height>41</height>
      </rect>
@@ -202,15 +202,15 @@
      <string>О программе</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/qt.png</normaloff>../build-newviewer-Desktop_Qt_5_10_0_MinGW_32bit-Debug/images/qt.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/images/images/qt.png</normaloff>:/images/images/qt.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>380</y>
+      <y>440</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -223,7 +223,7 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>350</y>
+      <y>440</y>
       <width>51</width>
       <height>21</height>
      </rect>
@@ -258,9 +258,37 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>350</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Начать слайдшоу</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>390</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Остановить слайдшоу</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

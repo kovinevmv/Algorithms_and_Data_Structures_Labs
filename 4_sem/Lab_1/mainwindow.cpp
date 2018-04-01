@@ -1,7 +1,9 @@
 #include "mainwindow.h"
+#include "helpbrowser.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include "solver.h"
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,9 +23,11 @@ int colorist = 1;
 int counter  = 1;
 int maxindex = 1;
 int minindex = 0;
+int max= 0;
 
 void MainWindow::on_pushButton_clicked()
 {
+
      remove("output_0.ppm");
      remove("output_1.ppm");
      remove("output_2.ppm");
@@ -32,16 +36,21 @@ void MainWindow::on_pushButton_clicked()
      remove("output_5.ppm");
      remove("output_6.ppm");
 
-
+     // Считывание значения стороны
      int value = ui->textEdit->toPlainText().toInt();
 
+
      ui->warning->setText("Происходит генерация решения.\nПожалуйста, подождите.");
+
+     // Проверка на корректность
      if (value <= 42 && value >=1 )
      {
 
          ui->progressBar->setValue(0);
          maxindex = mainsolver(ui->textEdit->toPlainText().toInt(), colorist, ui->progressBar, ui->sol);
 
+
+         // Установка изображений и переключателей
          counter = 1;
          QPixmap image("output_0.ppm");
          ui->label->clear();
@@ -52,17 +61,18 @@ void MainWindow::on_pushButton_clicked()
          ui->Current->clear();
          ui->Current->setPixmap(image1);
 
-         window()->setFixedSize(1150,420);
+         window()->setFixedSize(1150,500);
          ui->warning->setText("Генерация завершена.\nУспех!");
      }
      else
      {
+         // Очистка экрана
           ui->label->clear();
           ui->Current->clear();
           ui->progressBar->setValue(0);
-          ui->warning->setText("Невозможно решить задачу.\nВведите меньшее число");
+          ui->warning->setText("Невозможно решить задачу.\nВведите другое число");
           ui->step->setText("Шаг 1");
-          window()->setFixedSize(207,420);
+          window()->setFixedSize(207,500);
 
      }
 }
@@ -70,8 +80,12 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_next_clicked()
 {
+
+    // Проверка на существование картинки
     if (maxindex > counter +1 )
     {
+
+        // Открытие след. картинки
         counter++;
         char fileNameIndex[3];
         sprintf(fileNameIndex, "%d", counter);
@@ -87,8 +101,11 @@ void MainWindow::on_pushButton_next_clicked()
 
 void MainWindow::on_pushButton_prev_clicked()
 {
+
+// Проверка на существование картинки
     if (minindex < counter -1)
     {
+        // Открытие пред. картинки
         counter--;
         char fileNameIndex[3];
         sprintf(fileNameIndex, "%d", counter);
@@ -104,6 +121,8 @@ void MainWindow::on_pushButton_prev_clicked()
 
 void MainWindow::on_radioButton_clicked()
 {
+
+    // Переключатель цвета
     if (colorist == 1)
         colorist = 0;
     else
@@ -117,12 +136,28 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    QMessageBox::about(this, tr("Справка"), tr("Задача\n\nУ Томми есть много бумажных квадратиков. Длина из стороны (размер) изменяется от 1 до N – 1, и у него есть неограниченное число квадратов любого размера. Но ему очень хочется получить большой квадрат – размера N.\n\nОн может получить такой квадрат, построив его из уже имеющихся квадратов. Например, квадрат размера 7 может быть построен из 9 меньших квадратов. Внутри квадрата не должно быть пустого места, меньшие квадраты не должны выходить за пределы большего и не должны перекрываться. Кроме того Томми хочет истратить минимально возможное число квадратов."));
-         return;
+    HelpBrowser brows(":/help/help","help.htm");
+        brows.exec();
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     QMessageBox::about(this, tr("О программе"), tr("Выполнил:  Ковынев М.В.\nГруппа: 6304"));
          return;
+}
+
+QTimer *timer;
+void MainWindow::on_pushButton_5_clicked()
+{
+    // Установка таймера на слот
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_next_clicked()));
+    for (int i=0; i< maxindex; i++)
+         timer->start(1700);
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    // Отключение таймера
+    disconnect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_next_clicked()));
 }

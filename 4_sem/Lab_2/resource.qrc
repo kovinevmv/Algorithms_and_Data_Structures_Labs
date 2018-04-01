@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/2.png</file>
+        <file>images/clear.png</file>
+        <file>images/exit.png</file>
+        <file>images/go.png</file>
+        <file>images/graph.png</file>
+        <file>images/info.png</file>
+        <file>images/main.png</file>
+        <file>images/open.png</file>
+        <file>images/qt.png</file>
+        <file>images/save.png</file>
+        <file>images/search.png</file>
+    </qresource>
+    <qresource prefix="/help">
+        <file>help/help.htm</file>
+        <file>help/1.htm</file>
+        <file>help/spbctf.png</file>
+        <file>help/style.css</file>
+        <file>help/grad.png</file>
+        <file>help/bg.png</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>
