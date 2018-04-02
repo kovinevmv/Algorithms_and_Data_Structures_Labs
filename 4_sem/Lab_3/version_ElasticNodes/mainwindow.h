@@ -32,14 +32,8 @@ private slots:
     void on_action_3_triggered();
     void on_pushButton_7_clicked();
     void on_radioButton_clicked();
-
     void on_pushButton_8_clicked();
-
     void on_pushButton_9_clicked();
-
-    void on_action_5_triggered();
-
-
 private:
     Ui::MainWindow *ui;
 };

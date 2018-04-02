@@ -9,8 +9,8 @@ int main(int argc, char **argv)
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    w.setFixedSize(1100, 790);
-    w.setWindowTitle("Лабораторная работа №2");
+    w.setFixedSize(1100, 730);
+    w.setWindowTitle("Лабораторная работа №3");
     w.setWindowIcon(QIcon(":images/images/2.png"));
 
     return a.exec();

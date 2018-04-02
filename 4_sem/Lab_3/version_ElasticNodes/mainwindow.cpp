@@ -35,7 +35,7 @@ bool checkCorrectInputTxt(string input)
     processing = 1;
     while(getline(ss, firststring) && processing)
     {
-
+        qDebug() << "[" << QString::fromStdString(firststring) << "]";
         count++;
         if (firststring[0] != '[')
         {
@@ -54,7 +54,7 @@ bool checkCorrectInputTxt(string input)
         }
         else
         {
-            ss.ignore(1);
+
             if (firststring[firststring.size()-1] != ']')
             {
                 int ret = QMessageBox::warning(0, "Ошибка открытия файла!",
@@ -393,40 +393,31 @@ void MainWindow::on_pushButton_6_clicked()
 // Чтение из файла
 void MainWindow::on_action_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл"), QString(),
-                    tr("Text Files (*.txt)"));
-
     ui->textEdit_2->clear();
     ui->textEdit_3->clear();
+    QString FileName = QFileDialog::getOpenFileName(this, "Открыть файл...",QString(), "Text files (*.txt)");
+    if (FileName.isEmpty())
+        return;
 
-    if (!fileName.isEmpty())
+    QFile File(FileName);
+
+    if(File.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly))
+        QString x = File.readAll();
+        if (checkCorrectInputTxt(x.toLocal8Bit().constData()))
         {
-            QMessageBox::critical(this, tr("Ошибка"), tr("Не могу открыть данный файл"));
-            return;
+            ui->textEdit_2->setPlainText(x);
+            File.close();
         }
-        QTextStream in(&file);
-        QString x;
-        while (1)
-        {
-            x = in.readLine();
-            if (x != "#############")
-                ui->textEdit_2->setText(ui->textEdit_2->toPlainText() + x + "\n");
-            else
-                break;
-        }
-        while (1)
-        {
-            x = in.readLine();
-            if (x != "#############")
-                ui->textEdit_3->setText(ui->textEdit_3->toPlainText() + x + "\n");
-            else
-                break;
-        }
-       file.close();
+
     }
+
+    QString parseName =  "";
+    for (int i=1; i< 25; i++)
+    {
+        parseName += (QString::number(i) + ": " + QString::number(i) + "\n");
+    }
+    ui->textEdit_3->setPlainText(parseName);
 }
 
 // Сохранение в файл
@@ -459,7 +450,7 @@ void MainWindow::on_action_2_triggered()
 // Об авторе
 void MainWindow::on_action_4_triggered()
 {
-    QMessageBox::about(this, tr("Об авторе"), tr("Лабораторная работа №2\n\nВыполнил: Ковынев М.В.\nГруппа: 6304"));
+    QMessageBox::about(this, tr("Об авторе"), tr("Лабораторная работа №3\n\nВыполнил: Ковынев М.В.\nГруппа: 6304"));
         return;
 }
 
@@ -709,23 +700,4 @@ void MainWindow::on_pushButton_9_clicked()
 
 }
 
-void MainWindow::on_action_5_triggered()
-{
-    QString FileName = QFileDialog::getOpenFileName(this, "Открыть файл...",QString(), "Text files (*.txt)");
-    if (FileName.isEmpty())
-        return;
-
-    QFile File(FileName);
-
-    if(File.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QString x = File.readAll();
-        if (checkCorrectInputTxt(x.toLocal8Bit().constData()))
-        {
-            ui->textEdit_2->setPlainText(x);
-            File.close();
-        }
-
-    }
-}
 
