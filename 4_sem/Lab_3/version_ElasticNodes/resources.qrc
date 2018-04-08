@@ -9,6 +9,8 @@
         <file>help/style.css</file>
         <file>help/about_graph.htm</file>
         <file>help/examle_finded_way.png</file>
+        <file>help/me.jpg</file>
+        <file>help/me.gif</file>
     </qresource>
     <qresource prefix="/images">
         <file>images/2.png</file>

@@ -1,1 +1,101 @@
-﻿//beta
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+      <link rel='stylesheet' href="style.css" type='text/css' />
+  </head>
+  
+  
+  <body style='background: #691A0E;'><center><table border=0 id='wrapper'>
+    <tr><td colspan=2 id='headtd'>
+      Лабораторная работа <span id='headdm'>№3</span>
+    </td></tr>
+	
+<tr><td id='navtd'>	
+<table border=0 width='20%'>
+  <table border=0 cellpadding=1 id='restable'>
+    <tr id='reshead'>
+      <th><span style='font-size: 13px'><b class='canBeLong'>Навигационная панель</b><br/>
+	</span></th>
+    </tr>
+	 <tr class='odd'><td><span class='navitem'><a href='1.htm'>Главная страница</a></span></td>
+	 <tr class='odd'><td><span class='navitem'><a href='help.htm'>Алгоритм программы</a></span></td></tr>
+	 <tr class='odd'><td><span class='navitem'><a href='about_graph.htm' class='current'>Работа с графом</a></span></td>
+	 
+	 </table>
+  </td>
+   </td><td id='bodytd'>	
+   
+
+<table border=0 width='100%'>
+<tr><td width='100%' valign='top'>
+
+<h1 style='padding-bottom: 14px'><center>Работа с графом</center></h1>
+<big><big><big><big><h3>
+
+<p>Для создания графа необходимо сгенерировать матрицу смежности или
+ввести ее вручную в поле с подсказкой "Введите матрицу здесь".</p>
+
+Пример матрицы:
+<pre>
+[ 1 0 1 1 0 1 1 ]
+[ 0 0 1 1 0 0 1 ]
+[ 1 1 1 0 0 1 0 ]
+[ 1 1 0 1 0 1 1 ]
+[ 0 0 0 0 0 1 1 ]
+[ 1 0 1 1 1 1 1 ]
+[ 1 1 0 1 1 1 1 ]
+
+</pre>
+
+<p>&nbsp;&nbsp;Если на месте a[i][j] элемента матрицы стоит 1, значит существует путь от вершины i до вершины j. Для отрисовки графа необходимо нажать кнопку "Создать граф".</p>
+<p>&nbsp;&nbsp;Возможности программы:</p>
+<p>&nbsp;&nbsp;1) Изменение имен вершин. Для изменение имени вершины необходимо в поле, имеющем следующую структуру:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;1: 1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;2: 2</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;3: 3</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;4: 4</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;5: 5</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;....</p>
+<p>&nbsp;&nbsp;заменить число, стоящее после двоеточия на желаемую строку</p>
+
+<p>&nbsp;&nbsp;Пример: Замена 3 на "Три" будет выглядеть так:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;1: 1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;2: 2</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;3: Три</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;4: 4</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;5: 5</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;....</p>
+
+<p>&nbsp;&nbsp;После изменения необходимо нажать кнопку "Создать граф".</p>
+<p>&nbsp;2) Изменение цвета вершин соответствующей кнопкой главного окна на любой произвольный цвет палитры.</p>
+<p>&nbsp;3) Подвижность вершин. Для переноса вершины нажмите ЛКМ и перенесите в желаемое место сцены.</p>
+
+<p>&nbsp;4) Создание ребра. Дважды кликните на вершину, от которой будет идти ребро (Source Node), потом дважды кликните на вершину к которой будет идти ребро (Destination Node). Затем нажмите кнопку "Соединить вершины". В соседнем поле будут выведены выбранные вершины, присутствует возможность ручного выбора соединяемых вершин.</p>
+<p>&nbsp;5) Удаление ребра. (Аналогично созданию)</p>
+<p>&nbsp;6) Соединение и удаление всех ребер.</p>
+<p>&nbsp;7) Поиск расстояния между 2 вершинами. Создайте граф, в двух выпадающих списках в выберите произвольные вершины (левая - Source Node, правая - Destination Node). Нажмите кнопку "Найти расстояние расстояние между двумя фиксированными точкам". В результате работы алгоритма программа выведет граф с выделенным путем.</p>
+   <p></p>
+  <center><img src="examle_finded_way.png" id="lower"></center><p></p>
+ <center>Рисунок 2 - Пример графа, с найденным путем</center><br><br>
+<p>&nbsp;Для данного случая программа выведет:</p>
+<p>&nbsp;"Порядок посещения вершин:</p>
+<p>&nbsp;3 -> 2 -> 6 ->  7</p>
+<p>&nbsp;Расстояние: 16"</p>
+
+<p>&nbsp;8) Открытие таблицы смежности. Для того чтобы открыть сохраненную таблицу, необходимо нажать на кнопку "Открыть матрицу из файла" и выбрать текстовый файл. Пример такого файла - example.txt.</p>
+<p>&nbsp;9) Открытие форматированного графа. Для того чтобы открыть форматированный граф, необходимо нажать на кнопку "Открыть форматированный граф" и выбрать файл с расширением graf. Пример такого файла - example.graf. Данный формат файла сохраняет цвет и имена вершин, а также веса ребер.</p>
+  </h3></big></big></big></big>
+  </td>
+  </tr>
+  
+</table>
+    </td></tr>
+    <tr><tr><tr><tr><td colspan="2" id="foottd"><center><img src="spbctf.png" id="lower">  Coded by kovinevmv, 2018</center></td></tr></tr></tr></tr>
+    </tr>
+  </table></center>
+   
+  </body>
+</html>
+

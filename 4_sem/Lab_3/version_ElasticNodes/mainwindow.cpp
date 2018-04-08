@@ -19,6 +19,43 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_3->setDisabled(1);
     ui->pushButton_5->setDisabled(1);
     ui->textEdit_2->setPlaceholderText("Введите матрицу здесь");
+    QSplitter* spl = new QSplitter(Qt::Horizontal);
+    spl->addWidget(ui->textEdit_2);
+    spl->addWidget(ui->textEdit_3);
+    spl->resize(200, 200);
+    ui->scrollArea_2->setWidget(spl);
+
+
+    rotableGroupBox = new QGroupBox(tr("Rotable Widgets"));
+
+    rotableWidgets.append(ui->scrollArea);
+   //rotableWidgets.enqueue(ui->scrollArea);
+    rotableWidgets.enqueue(ui->label_5);
+    rotableWidgets.enqueue(ui->comboBox);
+    rotableWidgets.enqueue(ui->comboBox_2);
+    rotableLayout = new QGridLayout;
+    rotableGroupBox->setLayout(rotableLayout);
+
+
+
+    foreach (QWidget *widget, rotableWidgets)
+        rotableLayout->removeWidget(widget);
+
+    rotableWidgets.enqueue(rotableWidgets.dequeue());
+
+    const int n = rotableWidgets.count();
+    qDebug() << n;
+    for (int i = 0; i < n / 2; ++i) {
+        rotableLayout->addWidget(rotableWidgets[n - i - 1], 0, i);
+        rotableLayout->addWidget(rotableWidgets[i], 1, i);
+    }
+
+    mainLayout = new QGridLayout;
+    mainLayout->addWidget(rotableGroupBox, 0, 0);
+    setLayout(mainLayout);
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +72,6 @@ bool checkCorrectInputTxt(string input)
     processing = 1;
     while(getline(ss, firststring) && processing)
     {
-        qDebug() << "[" << QString::fromStdString(firststring) << "]";
         count++;
         if (firststring[0] != '[')
         {
@@ -46,7 +82,7 @@ bool checkCorrectInputTxt(string input)
             switch (ret)
             {
               case QMessageBox::Open:
-                  HelpBrowser brows(":/help/help","1.htm");
+                  HelpBrowser brows(":/help/help","about_graph.htm");
                   brows.exec();
                   break;
             }
@@ -64,7 +100,7 @@ bool checkCorrectInputTxt(string input)
                 switch (ret)
                 {
                   case QMessageBox::Open:
-                      HelpBrowser brows(":/help/help","1.htm");
+                      HelpBrowser brows(":/help/help","about_graph.htm");
                       brows.exec();
 
                       break;
@@ -360,7 +396,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     QPointF p(0.0,0.0);
     vector<vector<MyNode>> a = textEditToVector();
-    vector<vector<MyNode>> b(a[0].size(), vector<MyNode>(a[0].size(), {"", 1, p}));
+    vector<vector<MyNode>> b(a[0].size(), vector<MyNode>(a[0].size(), {"", 1, p, {0,0,0}, {0,0,0}}));
     updateMatrix(b);
     on_pushButton_clicked();
 
@@ -420,11 +456,29 @@ void MainWindow::on_action_triggered()
     ui->textEdit_3->setPlainText(parseName);
 }
 
-// Сохранение в файл
+quint32 key = 1488; //шифр
+QString encodeStr(const QString& str)
+{
+    QByteArray arr(str.toUtf8());
+    for(int i =0; i<arr.size(); i++)
+        arr[i] = arr[i] ^ key;
+    return QString::fromUtf8(arr.toBase64());
+}
+
+QString decodeStr(const QString &str)
+{
+    QByteArray arr = QByteArray::fromBase64(str.toLocal8Bit());
+       for(int i =0; i<arr.size(); i++)
+        arr[i] =arr[i] ^ key;
+    return QString::fromUtf8(arr);
+
+}
+
+// Сохранение в файл форматированного графа
 void MainWindow::on_action_2_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Сохранить файл"), QString(),
-                  tr("Text Files (*.txt)"));
+                  tr("My Graf (*.graf)"));
 
           if (!fileName.isEmpty())
           {
@@ -435,12 +489,19 @@ void MainWindow::on_action_2_triggered()
                   return;
               } else
               {
-                  QTextStream stream(&file);
-                  stream << ui->textEdit_2->toPlainText();
 
-                  stream << "\n#############\n";
-                  stream << ui->textEdit_3->toPlainText();
-                  stream << "\n#############\n";
+                  QTextStream stream(&file);
+
+                  stream << encodeStr(ui->textEdit_2->toPlainText()) + "\n";
+                  stream << encodeStr("#############");
+                  stream << "\n";
+                  stream << encodeStr(ui->textEdit_3->toPlainText());
+                  stream << "\n";
+                  stream << encodeStr("#############");
+                  stream << "\n";
+                  stream << encodeStr(QString::number(vv.red()) + " " +  QString::number(vv.green()) + " "  + QString::number(vv.blue()));
+                  stream << "\n";
+
                   stream.flush();
                   file.close();
               }
@@ -450,7 +511,35 @@ void MainWindow::on_action_2_triggered()
 // Об авторе
 void MainWindow::on_action_4_triggered()
 {
-    QMessageBox::about(this, tr("Об авторе"), tr("Лабораторная работа №3\n\nВыполнил: Ковынев М.В.\nГруппа: 6304"));
+
+
+        QDialog* inf  = new QDialog(this);
+
+        inf->setWindowModality(Qt::ApplicationModal);
+        QHBoxLayout * lay = new QHBoxLayout;
+        QLabel* e = new QLabel;
+        e->setFixedSize(180,180);
+
+        QMovie * mov = new QMovie(":help/help/me.gif");
+        mov->setScaledSize(QSize(180,180));
+        e->setMovie(mov);
+        mov->start();
+
+        QLabel * c = new QLabel("<center><big>Студент: Ковынев М.В.<p></p>Группа: 6304 - ПИ<p></p>Почта: kovinevmv@gmail.com</center></big>");
+        c->setWordWrap(true);
+
+        lay->addWidget(e);
+        lay->addWidget(c);
+
+        QPalette pal;
+        pal.setColor(QPalette::Window,Qt::white);
+        inf->setPalette(pal);
+
+        inf->setFixedSize(600,200);
+        inf->setWindowTitle("Об авторе");
+        inf->setLayout(lay);
+
+        inf->show();
         return;
 }
 
@@ -467,10 +556,8 @@ void MainWindow::on_pushButton_7_clicked()
     ui->comboBox->clear();
     ui->comboBox_2->clear();
     ui->plainTextEdit->clear();
-    int qq=1;
+
     vector<vector<MyNode>> a = textEditToVector();
-    int NN = a[0].size();
-    int* array = new int [NN];
 
     QString l=ui->textEdit_2->toPlainText();
     if (l.size()>10)
@@ -503,7 +590,7 @@ void MainWindow::on_pushButton_7_clicked()
     else
         ui->textEdit_4->setPlainText("error");
 
-    for (int i=0; i<a[0].size(); i++)
+    for (unsigned int i=0; i<a[0].size(); i++)
     {
         ui->comboBox->addItem(a[i][i].name);
         ui->comboBox_2->addItem(a[i][i].name);
@@ -543,8 +630,8 @@ void MainWindow::on_pushButton_9_clicked()
 
      // Считывание матрицы
         vector<vector<MyNode>> a = textEditToVector();
-        for (int i=0; i< a[0].size(); i++)
-            for (int j=0; j< a[0].size(); j++)
+        for (unsigned int i=0; i< a[0].size(); i++)
+            for (unsigned int j=0; j< a[0].size(); j++)
             {
                 a[i][j].vv= vv;
                 a[i][j].vv2= vv2;
@@ -649,10 +736,7 @@ void MainWindow::on_pushButton_9_clicked()
                     QStringList edge = ui->plainTextEdit->toPlainText().replace("-", "\n")
                             .replace(">", "\n").replace("=", "\n").remove(QRegExp("^\s*")).replace("\n", " ").split(" ");
 
-                    int edgeSize = (edge.size()  + 1) / 3;
-
-
-                    vector<pair<QString, QString>> arrayOfEdges;
+                   vector<pair<QString, QString>> arrayOfEdges;
                     for (int i = 0; i < edge.size() - 2; i = i +3)
                     {
                         arrayOfEdges.push_back({edge[i],edge[i+3]});
@@ -663,7 +747,7 @@ void MainWindow::on_pushButton_9_clicked()
 
                     // Заполняем цветом
                     QColor tt(0, 255, 0);
-                    for (int i=0; i<arrayOfEdges.size(); i++)
+                    for (unsigned int i=0; i<arrayOfEdges.size(); i++)
                     {
                         a[arrayOfEdges[i].first.toInt()-1][arrayOfEdges[i].first.toInt()-1].vv = tt;
                         a[arrayOfEdges[i].second.toInt()-1][arrayOfEdges[i].second.toInt()-1].vv = tt;
@@ -701,3 +785,38 @@ void MainWindow::on_pushButton_9_clicked()
 }
 
 
+
+void MainWindow::on_action_5_triggered()
+{
+    ui->textEdit_2->clear();
+    ui->textEdit_3->clear();
+    QString FileName = QFileDialog::getOpenFileName(this, "Открыть файл...",QString(), "Graf (*.graf)");
+    if (FileName.isEmpty())
+        return;
+
+    QFile File(FileName);
+
+    if(File.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString x = File.readAll();
+            QTextStream stream(&x);
+            QString currentEncodedString;
+            stream >> currentEncodedString;
+            ui->textEdit_2->setPlainText(decodeStr(currentEncodedString));
+
+             stream >> currentEncodedString;
+              stream >> currentEncodedString;
+              ui->textEdit_3->setPlainText(decodeStr(currentEncodedString));
+              stream >> currentEncodedString;
+              stream >> currentEncodedString;
+
+              QStringList color = decodeStr(currentEncodedString).split(" ");
+              vv.setRed(color[0].toInt());
+              vv.setGreen(color[1].toInt());
+              vv.setBlue(color[2].toInt());
+            File.close();
+           on_pushButton_clicked();
+
+    }
+
+}

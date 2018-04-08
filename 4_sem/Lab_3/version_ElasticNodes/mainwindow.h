@@ -34,8 +34,15 @@ private slots:
     void on_radioButton_clicked();
     void on_pushButton_8_clicked();
     void on_pushButton_9_clicked();
+    void on_action_5_triggered();
+
 private:
     Ui::MainWindow *ui;
+
+    QGroupBox *rotableGroupBox;
+    QQueue<QWidget *> rotableWidgets;
+    QGridLayout *mainLayout;
+    QGridLayout *rotableLayout;
 };
 
 #endif // MAINWINDOW_H

@@ -21,8 +21,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
-      <width>201</width>
+      <y>280</y>
+      <width>361</width>
       <height>41</height>
      </rect>
     </property>
@@ -48,8 +48,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
-      <width>201</width>
+      <y>10</y>
+      <width>361</width>
       <height>31</height>
      </rect>
     </property>
@@ -59,16 +59,6 @@
     <property name="icon">
      <iconset resource="resources.qrc">
       <normaloff>:/images/images/graph.png</normaloff>:/images/images/graph.png</iconset>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="textEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>201</width>
-      <height>171</height>
-     </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -105,21 +95,11 @@
       <normaloff>:/images/images/go.png</normaloff>:/images/images/go.png</iconset>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit_3">
-    <property name="geometry">
-     <rect>
-      <x>235</x>
-      <y>30</y>
-      <width>141</width>
-      <height>231</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>235</x>
-      <y>10</y>
+      <x>220</x>
+      <y>80</y>
       <width>151</width>
       <height>16</height>
      </rect>
@@ -160,19 +140,6 @@
     <property name="icon">
      <iconset resource="resources.qrc">
       <normaloff>:/images/images/clear.png</normaloff>:/images/images/clear.png</iconset>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>191</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Введите матрицу смежности: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -227,19 +194,6 @@
      <string>Найти кратчайшее расстояние между всеми точками</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>201</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ориентированный граф</string>
-    </property>
-   </widget>
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
@@ -262,19 +216,6 @@
       </rect>
      </property>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton_8">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>270</y>
-      <width>146</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Изменить цвет</string>
-    </property>
    </widget>
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
@@ -371,6 +312,88 @@
      <string>________________________________________________________________________________________________</string>
     </property>
    </widget>
+   <widget class="QScrollArea" name="scrollArea_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>361</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>359</width>
+       <height>169</height>
+      </rect>
+     </property>
+     <widget class="QTextEdit" name="textEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>201</width>
+        <height>171</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEdit_3">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>0</y>
+        <width>141</width>
+        <height>171</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>191</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Введите матрицу смежности: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ориентированный граф</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>45</y>
+      <width>161</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Изменить цвет</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -387,6 +410,7 @@
     </property>
     <addaction name="action"/>
     <addaction name="action_2"/>
+    <addaction name="action_5"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -404,7 +428,7 @@
      <normaloff>:/images/images/open.png</normaloff>:/images/images/open.png</iconset>
    </property>
    <property name="text">
-    <string>Открыть файл</string>
+    <string>Открыть матрицу из файла</string>
    </property>
   </action>
   <action name="action_2">
@@ -413,7 +437,7 @@
      <normaloff>:/images/images/save.png</normaloff>:/images/images/save.png</iconset>
    </property>
    <property name="text">
-    <string>Сохранить в файл</string>
+    <string>Сохранить форматированный граф</string>
    </property>
   </action>
   <action name="action_3">
@@ -431,6 +455,15 @@
   <action name="action_4">
    <property name="text">
     <string>Об авторе</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть форматированный граф</string>
    </property>
   </action>
  </widget>
