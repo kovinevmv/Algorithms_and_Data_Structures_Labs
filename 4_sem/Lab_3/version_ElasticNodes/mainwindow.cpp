@@ -11,11 +11,8 @@ QColor vv2(0,0,0);
 GraphWidget *widget;
 bool processing = 0;
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+void MainWindow::createQSplliterBox()
 {
-    ui->setupUi(this);
     ui->pushButton_3->setDisabled(1);
     ui->pushButton_5->setDisabled(1);
     ui->textEdit_2->setPlaceholderText("Введите матрицу здесь");
@@ -24,37 +21,96 @@ MainWindow::MainWindow(QWidget *parent) :
     spl->addWidget(ui->textEdit_3);
     spl->resize(200, 200);
     ui->scrollArea_2->setWidget(spl);
+}
+
+void MainWindow::createFirst()
+{
+    rotableGroupBox1 = new QGroupBox(tr("Генерация"));
+
+    rotableLayout1 = new QGridLayout;
+    rotableGroupBox1->setLayout(rotableLayout1);
+
+    rotableLayout1->addWidget(ui->pushButton_2, 0, 0, 1, 0);
+    rotableLayout1->addWidget(ui->radioButton, 1, 0);
+    rotableLayout1->addWidget(ui->pushButton_8, 1, 1);
+     rotableLayout1->addWidget(ui->label, 2, 1);
+     rotableLayout1->addWidget(ui->label_2, 2, 0);
+    rotableLayout1->addWidget(ui->scrollArea_2, 3, 0, 1, 0);
+
+    rotableLayout1->addWidget(ui->textEdit_2, 4, 0);
+    rotableLayout1->addWidget(ui->textEdit_3, 4, 1);
+    rotableLayout1->addWidget(ui->pushButton, 5, 0, 1, 0);
+    rotableLayout1->addWidget(ui->pushButton_7, 6, 0, 1, 0);
+    ui->pushButton_7->setFixedSize(0,0);
+
+}
+
+void MainWindow::createSecond()
+{
+    rotableGroupBox2 = new QGroupBox(tr("Полученный граф:"));
+
+    rotableLayout2 = new QGridLayout;
+    rotableGroupBox2->setLayout(rotableLayout2);
+
+     ui->scrollArea->setMinimumSize(620, 620);
+     ui->textEdit_4->setFixedSize(0,0);
+    rotableLayout2->addWidget(ui->scrollArea, 1, 0, 1, 3);
+    rotableLayout2->addWidget(ui->textEdit_4, 2, 0, 1, 0);
+
+}
+
+void MainWindow::createThird()
+{
+    rotableGroupBox3 = new QGroupBox();
+
+    rotableLayout3 = new QGridLayout;
+    rotableGroupBox3->setLayout(rotableLayout3);
+
+    rotableLayout3->addWidget(ui->label_4, 0, 0);
+    rotableLayout3->addWidget(ui->textEdit, 1, 0, 1, 0);
+    rotableLayout3->addWidget(ui->pushButton_3, 2, 0);
+    rotableLayout3->addWidget(ui->pushButton_5, 2, 1);
+    rotableLayout3->addWidget(ui->pushButton_4, 3, 0, 1, 0);
+    rotableLayout3->addWidget(ui->pushButton_6, 4, 0, 1, 0);
+}
+
+void MainWindow::createFourth()
+{
+    rotableGroupBox4 = new QGroupBox();
+
+    rotableLayout4 = new QGridLayout;
+    rotableGroupBox4->setLayout(rotableLayout4);
+    rotableLayout4->addWidget(ui->label_6, 1, 0);
+    rotableLayout4->addWidget(ui->label_7, 1, 1);
+    rotableLayout4->addWidget(ui->comboBox, 2, 0);
+    rotableLayout4->addWidget(ui->comboBox_2, 2, 1);
+    rotableLayout4->addWidget(ui->pushButton_9, 3, 0, 1, 0);
+    rotableLayout4->addWidget(ui->plainTextEdit, 4, 0, 1, 0);
+
+}
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
 
 
-    rotableGroupBox = new QGroupBox(tr("Rotable Widgets"));
+    ui->setupUi(this);
 
-    rotableWidgets.append(ui->scrollArea);
-   //rotableWidgets.enqueue(ui->scrollArea);
-    rotableWidgets.enqueue(ui->label_5);
-    rotableWidgets.enqueue(ui->comboBox);
-    rotableWidgets.enqueue(ui->comboBox_2);
-    rotableLayout = new QGridLayout;
-    rotableGroupBox->setLayout(rotableLayout);
-
-
-
-    foreach (QWidget *widget, rotableWidgets)
-        rotableLayout->removeWidget(widget);
-
-    rotableWidgets.enqueue(rotableWidgets.dequeue());
-
-    const int n = rotableWidgets.count();
-    qDebug() << n;
-    for (int i = 0; i < n / 2; ++i) {
-        rotableLayout->addWidget(rotableWidgets[n - i - 1], 0, i);
-        rotableLayout->addWidget(rotableWidgets[i], 1, i);
-    }
+    createFirst();
+    createSecond();
+    createThird();
+    createFourth();
+    createQSplliterBox();
 
     mainLayout = new QGridLayout;
-    mainLayout->addWidget(rotableGroupBox, 0, 0);
-    setLayout(mainLayout);
-
-
+    mainLayout->addWidget(rotableGroupBox1, 0, 0);
+    mainLayout->addWidget(rotableGroupBox2, 0, 1, 3, 1);
+    mainLayout->addWidget(rotableGroupBox3, 1, 0);
+    mainLayout->addWidget(rotableGroupBox4, 2, 0);
+    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    QWidget *window = new QWidget();
+    window->setLayout(mainLayout);
+    setCentralWidget(window);
 
 }
 

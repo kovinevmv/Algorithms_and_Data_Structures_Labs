@@ -142,19 +142,6 @@
       <normaloff>:/images/images/clear.png</normaloff>:/images/images/clear.png</iconset>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>315</y>
-      <width>371</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>________________________________________________________________________________________________</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -184,7 +171,7 @@
    <widget class="QPushButton" name="pushButton_7">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>40</x>
       <y>510</y>
       <width>0</width>
       <height>0</height>
@@ -297,19 +284,6 @@
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Конечная вершина&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>480</y>
-      <width>371</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>________________________________________________________________________________________________</string>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea_2">

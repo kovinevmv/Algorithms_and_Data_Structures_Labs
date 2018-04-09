@@ -17,6 +17,12 @@ public:
     ~MainWindow();
 
 private slots:
+    void createQSplliterBox();
+
+    void createFirst();
+    void createSecond();
+    void createThird();
+    void createFourth();
     void on_pushButton_clicked();
     void on_textEdit_textChanged();
     void on_pushButton_2_clicked();
@@ -39,10 +45,17 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    QGroupBox *rotableGroupBox;
-    QQueue<QWidget *> rotableWidgets;
+    QGroupBox *rotableGroupBox1;
+    QGroupBox *rotableGroupBox2;
+    QGroupBox *rotableGroupBox3;
+    QGroupBox *rotableGroupBox4;
+
     QGridLayout *mainLayout;
-    QGridLayout *rotableLayout;
+    QGridLayout *rotableLayout1;
+    QGridLayout *rotableLayout2;
+    QGridLayout *rotableLayout3;
+    QGridLayout *rotableLayout4;
+
 };
 
 #endif // MAINWINDOW_H

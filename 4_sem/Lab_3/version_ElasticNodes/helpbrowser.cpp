@@ -7,7 +7,7 @@ HelpBrowser::HelpBrowser(const QString& strPath,
     //окно со справкой на базе браузера
     setWindowFlags(Qt::Dialog);
     setWindowFlags(Qt::CustomizeWindowHint |Qt::WindowMinMaxButtonsHint| Qt::WindowCloseButtonHint);
-    setMinimumSize(700,400);
+    setMinimumSize(970,400);
     move(200,100);
     setWindowModality(Qt::WindowModal);
     setWindowIcon(QIcon(":/images/images/main.png"));
