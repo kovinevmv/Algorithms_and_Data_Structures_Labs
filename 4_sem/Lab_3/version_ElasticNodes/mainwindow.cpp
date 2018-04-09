@@ -576,7 +576,7 @@ void MainWindow::on_action_4_triggered()
         QLabel* e = new QLabel;
         e->setFixedSize(180,180);
 
-        QMovie * mov = new QMovie(":help/help/me.gif");
+        QMovie * mov = new QMovie(":help/help/me.jpg");
         mov->setScaledSize(QSize(180,180));
         e->setMovie(mov);
         mov->start();
