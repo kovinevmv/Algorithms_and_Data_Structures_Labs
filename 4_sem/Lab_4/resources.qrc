@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/help">
+        <file>help/1.htm</file>
+        <file>help/about_graph.htm</file>
+        <file>help/bg.png</file>
+        <file>help/example.png</file>
+        <file>help/grad.png</file>
+        <file>help/help.htm</file>
+        <file>help/me.jpg</file>
+        <file>help/spbctf.png</file>
+        <file>help/style.css</file>
+        <file>help/examle_finded_way.png</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/2.png</file>
+        <file>images/clear.png</file>
+        <file>images/exit.png</file>
+        <file>images/go.png</file>
+        <file>images/graph.png</file>
+        <file>images/info.png</file>
+        <file>images/main.png</file>
+        <file>images/open.png</file>
+        <file>images/qt.png</file>
+        <file>images/save.png</file>
+        <file>images/search.png</file>
+        <file>images/solved.png</file>
+        <file>images/3.gif</file>
+    </qresource>
+</RCC>

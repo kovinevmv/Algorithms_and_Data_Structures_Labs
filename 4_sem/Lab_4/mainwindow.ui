@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>934</width>
+    <height>479</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Алгоритмы на графах</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/img/internet.png</normaloff>:/img/internet.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(60,60,60);
+color: white;
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QGroupBox {
+     border: 2px solid red;
+     border-radius: 5px;
+     margin-top: 5ex; /* оставляем пространство вверху для заголовка */
+ }
+
+ QGroupBox::title {
+     subcontrol-origin: margin;
+     subcontrol-position: top center; /* помещаем вверху по центру */
+     padding: 0 3px;
+     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #FFOECE, stop: 1 #FFFFFF);
+	color:white;
+	font: 14pt &quot;Candara&quot;;
+
+ }</string>
+      </property>
+      <property name="title">
+       <string>Отрисовка графа</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	 border: 2px solid #ed5b35;
+     border-radius: 6px;
+	 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #262626, stop: 1 #161616);
+	font: 150 14pt &quot;Candara&quot;;
+    color: white;
+	
+ }
+</string>
+         </property>
+         <property name="text">
+          <string>Найти максимальный поток</string>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/images/graph.png</normaloff>:/images/images/graph.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MGraphView" name="graphicsView">
+         <property name="styleSheet">
+          <string notr="true">background-color: white;
+border: 1px solid red;
+color: black;
+font: 150 14pt &quot;Candara&quot;;
+text-align: center; </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>934</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar::item:selected { /* когда выделено с помощью мыши или клавиатуры */
+     background: #606060;
+ }
+
+</string>
+   </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+    </property>
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+    </property>
+    <property name="title">
+     <string>Генерация</string>
+    </property>
+    <addaction name="action_6"/>
+    <addaction name="action_1"/>
+    <addaction name="action_13"/>
+    <addaction name="action_14"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+    </property>
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <widget class="QMenu" name="menu_4">
+     <property name="styleSheet">
+      <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+     </property>
+     <property name="title">
+      <string>Список инцидентности</string>
+     </property>
+     <addaction name="action_20"/>
+     <addaction name="action_19"/>
+    </widget>
+    <widget class="QMenu" name="menu_grph">
+     <property name="styleSheet">
+      <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+     </property>
+     <property name="title">
+      <string>Форматированный граф (.grph)</string>
+     </property>
+     <addaction name="action_grph_3"/>
+     <addaction name="action_21"/>
+    </widget>
+    <widget class="QMenu" name="menu_zgrph">
+     <property name="styleSheet">
+      <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+     </property>
+     <property name="title">
+      <string>Новый форматированный граф (.zgrph)</string>
+     </property>
+     <addaction name="action_3"/>
+     <addaction name="action_zgrph_2"/>
+    </widget>
+    <addaction name="menu_4"/>
+    <addaction name="menu_grph"/>
+    <addaction name="menu_zgrph"/>
+    <addaction name="action_15"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu {
+     margin: 2px; /* немного пространства вокруг меню */
+ }
+
+ QMenu::item {
+     padding: 2px 25px 2px 20px;
+     border: 2px solid transparent; /* резерв пространства для границы выделения */
+ }
+
+ QMenu::item:selected {
+     border-color: darkMagenta ;
+     background: rgba(100, 100, 100, 150);
+ }
+
+ QMenu::icon:checked { /* внешний вид пиктограммы 'отмечено' */
+     background: gray;
+     border: 1px inset gray;
+     position: absolute;
+     top: 2px;
+     right: 2px;
+     bottom: 2px;
+     left: 2px;
+ }
+
+ QMenu::separator {
+     height: 3px;
+     background: darkMagenta ;
+     margin-left: 12px;
+     margin-right: 6px;
+ }</string>
+    </property>
+    <property name="title">
+     <string>Граф</string>
+    </property>
+    <addaction name="action_7"/>
+    <addaction name="action_8"/>
+   </widget>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="action">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/info.png</normaloff>:/img/info.png</iconset>
+   </property>
+   <property name="text">
+    <string>Справка</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="action_Qt">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/qt.png</normaloff>:/img/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Qt</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/main_menu_about.png</normaloff>:/img/main_menu_about.png</iconset>
+   </property>
+   <property name="text">
+    <string>Об Авторе</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/save.png</normaloff>:/img/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить как форматированный граф (.grph)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/clear.png</normaloff>:/img/clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Очистить</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="action_8">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настройки графа</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/example.png</normaloff>:/img/example.png</iconset>
+   </property>
+   <property name="text">
+    <string>Примеры графов</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/flow.png</normaloff>:/img/flow.png</iconset>
+   </property>
+   <property name="text">
+    <string>Поиск максимального потока (№3)</string>
+   </property>
+  </action>
+  <action name="action_1">
+   <property name="text">
+    <string>Пример №1</string>
+   </property>
+  </action>
+  <action name="action_13">
+   <property name="text">
+    <string>Пример №2</string>
+   </property>
+  </action>
+  <action name="action_14">
+   <property name="text">
+    <string>Пример №3</string>
+   </property>
+  </action>
+  <action name="action_15">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выход</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="action_16">
+   <property name="text">
+    <string>Простой текст</string>
+   </property>
+  </action>
+  <action name="action_19">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/save.png</normaloff>:/images/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить как список</string>
+   </property>
+  </action>
+  <action name="action_20">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/open.png</normaloff>:/images/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть список</string>
+   </property>
+  </action>
+  <action name="action_21">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/save.png</normaloff>:/images/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить .grph</string>
+   </property>
+  </action>
+  <action name="action_grph_3">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/open.png</normaloff>:/images/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть .grph</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/open.png</normaloff>:/images/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть .zgrph</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_zgrph_2">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/save.png</normaloff>:/images/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить .zgrph</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/images/solved.png</normaloff>:/images/images/solved.png</iconset>
+   </property>
+   <property name="text">
+    <string>Случайный граф</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MGraphView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">mgraphview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
