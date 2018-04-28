@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GraphWindow</class>
+ <widget class="QWidget" name="GraphWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>789</width>
+    <height>541</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(60,60,60);
+color: white;</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+	font: 16pt &quot;Candara&quot;;
+     border: 2px solid red;
+     border-radius: 4px;
+     margin-top: 6ex; /* оставляем пространство вверху для заголовка */
+ }
+
+ QGroupBox::title {
+     subcontrol-origin: margin;
+     subcontrol-position: top center; /* помещаем вверху по центру */
+     padding: 0 2px;
+     
+	color:white;
+	
+}</string>
+     </property>
+     <property name="title">
+      <string>Отрисовка графа</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	 border: 2px solid #ed5b35;
+     border-radius: 6px;
+	 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #262626, stop: 1 #161616);
+	font: 150 14pt &quot;Candara&quot;;
+    color: white;
+	
+ }</string>
+        </property>
+        <property name="text">
+         <string>Найти максимальный поток</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	 border: 2px solid #ed5b35;
+     border-radius: 6px;
+	 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #262626, stop: 1 #161616);
+	font: 150 14pt &quot;Candara&quot;;
+    color: white;
+	
+ }</string>
+        </property>
+        <property name="text">
+         <string>Очистить поток</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MGraphView" name="main_graph" native="true">
+        <property name="styleSheet">
+         <string notr="true">background-color: white;
+border: 1px solid red;
+color: black;
+font: 150 14pt &quot;Candara&quot;;
+text-align: center;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MGraphView</class>
+   <extends>QWidget</extends>
+   <header>mgraphview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

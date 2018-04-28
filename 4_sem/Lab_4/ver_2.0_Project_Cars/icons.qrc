@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/graph.png</file>
+        <file>cars/1.png</file>
+        <file>cars/4.png</file>
+        <file>cars/2.png</file>
+        <file>cars/3.png</file>
+        <file>cars/5.png</file>
+        <file>cars/6.png</file>
+        <file>cars/7.png</file>
+        <file>cars/8.png</file>
+        <file>player/forward.png</file>
+        <file>player/pause.png</file>
+        <file>player/play.png</file>
+        <file>help/1.htm</file>
+        <file>help/about_graph.htm</file>
+        <file>help/bg.png</file>
+        <file>help/examle_finded_way.png</file>
+        <file>help/example.png</file>
+        <file>help/grad.png</file>
+        <file>help/help.htm</file>
+        <file>help/me.jpg</file>
+        <file>help/spbctf.png</file>
+        <file>help/style.css</file>
+        <file>icons/2.png</file>
+        <file>icons/3.gif</file>
+    </qresource>
+</RCC>
