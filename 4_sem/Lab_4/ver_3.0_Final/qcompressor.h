@@ -10,10 +10,12 @@
 class QCompressor
 {
 public:
+    // Функция сжатия текста
     static bool gzipCompress(QByteArray input, QByteArray &output, int level = -1);
+    // Функция декомпрессии текста
     static bool gzipDecompress(QByteArray input, QByteArray &output);
-    static QByteArray cryptData(QString input);
-    static QString decryptData(QByteArray input);
+    static QByteArray cryptData(QString input);       // Функция шифрования тектса
+    static QString  decryptData(QByteArray input);    // Функция дешифрования текста
 };
 
 #endif // QCOMPRESSOR_H

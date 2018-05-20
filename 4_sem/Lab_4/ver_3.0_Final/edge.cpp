@@ -235,16 +235,17 @@ void Edge::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	setSelected(false);
 }
 
-
-
+// Установить пропускную способность
 void Edge::setValue(int n)
 {
 	value = n;
 }
 
+// Пропускная способность
 int Edge::getValue() const {return value;}
 
-void Edge::remove() //удаление ребра
+// Удаление ребра
+void Edge::remove()
 {
     dest->getEdges()->removeAll(this);
     source->getEdges()->removeAll(this);
@@ -254,74 +255,89 @@ void Edge::remove() //удаление ребра
 	setAnimating(false);
 	scene->removeItem(this);
 
-//заносим в контейнер с удаленными ребрами данное ребро
-//т.к. при удалении со сцены она больше не ответсвенная за удаление
-//объектов на ней.
-	scene->deleted_it << this; //в деструкторе сцены этот контейнер очистится
+    //заносим в контейнер с удаленными ребрами данное ребро
+    //т.к. при удалении со сцены она больше не ответсвенная за удаление
+    //объектов на ней.
+    scene->deleted_it << this; // В деструкторе сцены этот контейнер очистится
 	scene->performed_actions << MScene::smth_delted;
 }
 
+// Обработка двойного клика на ребро
 void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
 	QGraphicsItem::mouseDoubleClickEvent(event);
     bool ok;
 	int t = QInputDialog::getInt(scene->getMGraph(), "Пропуск. способн.",
-								 "Пропуск. способн.", value,1,1000000,1,&ok
-								 );
+            "Пропуск. способн.", value,1,1000000,1,&ok);
 	if(ok)
 		setValue(t);
 }
 
-
+// Установка цвета ребра
 void Edge::setColor(QColor col)
 {
     main_color = col;
 	update();
 }
 
-Node * Edge::destNode() const { return dest;}
+// Получить вершину источник
+Node * Edge::destNode() const
+{
+    return dest;
+}
 
-Node * Edge::sourceNode() const{ return source;}
+// Получить вершину ребенок
+Node * Edge::sourceNode() const
+{
+    return source;
+}
 
-int Edge::type() const {return Type;}
+// Переопредление типа
+int Edge::type() const
+{
+    return Type;
+}
 
 
 void Edge::deleteAnimation()
 {
-    //удалить соединение с всплывающим текстом
-        disconnect(timer,&QTimeLine::finished,this,&Edge::popupAnim);
+   // Удалить соединение с всплывающим текстом
+   disconnect(timer,&QTimeLine::finished,this,&Edge::popupAnim);
 
-        timer->stop();
+   timer->stop();
 
-        if(!it->pixmap().isNull()) //удалить со сцены аним. объект
-            scene->removeItem(it);
+   if(!it->pixmap().isNull()) // Удалить со сцены аним. объект
+       scene->removeItem(it);
 
-        if(!it->childItems().isEmpty())
-            it->childItems().first()->setParentItem(Q_NULLPTR);
+   if(!it->childItems().isEmpty())
+       it->childItems().first()->setParentItem(Q_NULLPTR);
 
-        it->setPixmap(QPixmap()); //обнулить картинку объекта
+   it->setPixmap(QPixmap()); // Обнулить картинку объекта
 }
 
-void Edge::setAnimating(bool a)
+void Edge::setAnimating(bool value)
 {
-    animating = a;
+    animating = value;
 
     if(!animating)
-        deleteAnimation(); //если false - удалить анимацию
+        deleteAnimation(); // Если false - удалить анимацию
     else
     {
-    //соединить заверешние таймера с всплывающей анимацией текста
+        // Соединить заверешние таймера с всплывающей анимацией текста
         connect(timer,&QTimeLine::finished,this,&Edge::popupAnim);
         animate(); //анимировать
     }
 }
 
-bool Edge::isAnimating() const {return animating;}
+bool Edge::isAnimating() const
+{
+    return animating;
+}
 
 void Edge::popupAnim()
 {
-    //Всплывающий текст
-    QGraphicsTextItem * t = new QGraphicsTextItem("+" +QString::number(currentValue),this);
+    // Всплывающий текст
+        QGraphicsTextItem * t = new QGraphicsTextItem("+" +QString::number(currentValue),this);
 
         t->setPos(destNode()->scenePos()+ QPointF(30,-30));
         t->setZValue(3.0);
@@ -330,15 +346,15 @@ void Edge::popupAnim()
         timer->setLoopCount(1);
         timer->setEasingCurve(QEasingCurve::OutQuad);
 
-        //эффект прозрачности для постепенного изчезновения объекта
+        // Эффект прозрачности для постепенного изчезновения объекта
         QGraphicsOpacityEffect * op = new QGraphicsOpacityEffect;
         t->setGraphicsEffect(op);
 
-        //соединяем таймер с лямбда-выражением, т.к. прозрачность меняется не по
-        //easing curve таймера
+        // Соединяем таймер с лямбда-выражением, т.к. прозрачность меняется не по
+        // easing curve таймера
         connect(timer,&QTimeLine::valueChanged,[op](qreal value)
                                                         { op->setOpacity(1.0-qPow(value,4));});
-    //анимационный объект
+    // Анимационный объект
         QGraphicsItemAnimation * posAnim= new QGraphicsItemAnimation;
         posAnim->setTimeLine(timer);
         posAnim->setItem(t);
@@ -347,7 +363,7 @@ void Edge::popupAnim()
 
         timer->start(); //начало анимации всплывающего текста
 
-    //соединение завершения таймера и удаление всех созданных объектов
+    // Соединение завершения таймера и удаление всех созданных объектов
         connect(timer,&QTimeLine::finished,t,&QGraphicsTextItem::deleteLater);
         connect(timer,&QTimeLine::finished,posAnim,&QGraphicsItemAnimation::deleteLater);
         connect(timer,&QTimeLine::finished,op,&QGraphicsOpacityEffect::deleteLater);
@@ -359,31 +375,32 @@ void Edge::popupAnim()
         it->setPixmap(p);
         it->setOffset(-p.width()/2.0,-p.height()/2.0);
 
-        this->timer->start(); //запустить заново основную анимацию передвижения
+        this->timer->start(); // Запустить заново основную анимацию передвижения
 
 }
 
+// Обновить координаты анимации при перетаскивании вершин
 void Edge::updateAnimation()
 {
-    if(!animating || sourcePoint == destPoint)
+    if(sourcePoint == destPoint)
         return;
 
-    QLineF line(sourcePoint, destPoint); //линия соединения вершин
+    QLineF line(sourcePoint, destPoint); // Линия соединения вершин
 
-    double angle = ::acos(line.dx() / line.length()); //угол наклона основной линии соединения
+    double angle = ::acos(line.dx() / line.length()); // Угол наклона основной линии соединения
     if (line.dy() >= 0)
         angle = TwoPi - angle;
 
-    //средняя точка основной линии со смещением
+    // Средняя точка основной линии со смещением
     QPointF c = 0.5*line.p1() + 0.5*line.p2() +QPointF(-sin(angle)*40,cos(Pi - angle)*40);
 
-    QPainterPath a; //построение кривой через три точки
+    QPainterPath a; // Построение кривой через три точки
     a.moveTo(sourcePoint);
     a.quadTo(c,destPoint);
 
-    timer->setDuration(a.length()/0.1); //расчет времени по длине ребра
+    timer->setDuration(a.length()/0.1); // Расчет времени по длине ребра
 
-    bool ce = true; //для правильного расчета поворота
+    bool ce = true; // Для правильного расчета поворота
     for(int i = 0; i <= 10; i++)
     {
         qreal p = i/10.0;
@@ -395,7 +412,7 @@ void Edge::updateAnimation()
         if(a.angleAtPercent(p) > a.angleAtPercent(p_pred))
             ce = false;
 
-        //установка позиции в разный момент времени
+        // Установка позиции в разный момент времени
         if(i==0)
             posAnim->setPosAt(p,sourceNode()->scenePos());
         else if(i==10)
@@ -403,7 +420,7 @@ void Edge::updateAnimation()
         else
             posAnim->setPosAt(p,a.pointAtPercent(p));
 
-        //установка поворота в разные моменты времени
+        // Установка поворота в разные моменты времени
         posAnim->setRotationAt(p, ce ? -a.angleAtPercent(p) : 360 - a.angleAtPercent(p));
     }
 
@@ -411,60 +428,20 @@ void Edge::updateAnimation()
 
 void Edge::animate()
 {
-
     if(sourcePoint == destPoint)
         return;
 
-    QLineF line(sourcePoint, destPoint);
-
-    double angle = ::acos(line.dx() / line.length());
-    if (line.dy() >= 0)
-        angle = TwoPi - angle;
-
-    QPointF c = 0.5*line.p1() + 0.5*line.p2() +QPointF(-sin(angle)*40,cos(Pi - angle)*40);
-
-    QPainterPath a;
-    a.moveTo(sourcePoint);
-    a.quadTo(c,destPoint);
-
-    timer->setDuration(a.length()/0.1);
-
-
     QPixmap p(":/cars/" +QString::number(qrand() % 8 + 1) +".png");
 
-    it->setPixmap(p); //установить изображение на объект
-    it->setOffset(-p.size().width()/2.0,-p.size().height()/2.0); //установка центра
+    it->setPixmap(p); // Установить изображение на объект
+    it->setOffset(-p.size().width()/2.0,-p.size().height()/2.0); // Установка центра
     it->setZValue(0.5);
     it->setPos(sourceNode()->scenePos());
     it->setTransformationMode(Qt::SmoothTransformation);
 
     posAnim->setItem(it);
 
-    bool ce = true;
-    for(int i = 0; i <= 10; i++)
-    {
-        qreal p = i/10.0;
-        qreal p_pred =0;
-
-        if(i>0)
-            p_pred =(i-1)/10.0;
-
-        if(a.angleAtPercent(p) > a.angleAtPercent(p_pred))
-            ce = false;
-
-        if(i==0)
-            posAnim->setPosAt(p,sourceNode()->scenePos());
-         else if(i==10)
-            posAnim->setPosAt(p,destNode()->scenePos());
-        else
-            posAnim->setPosAt(p,a.pointAtPercent(p));
-
-        posAnim->setRotationAt(p,
-                               ce
-                               ? -a.angleAtPercent(p)
-                                 : 360 - a.angleAtPercent(p)
-                               );
-    }
+    updateAnimation();
     scene->addItem(it);
     timer->start();
 

@@ -44,16 +44,14 @@ MGraphView * MScene::getMGraph() const
 
 MScene::~MScene()
 {
-	//очистить контейнеры с удаленными объектами
+    // Очистить контейнеры с удаленными объектами
 	foreach(QGraphicsItem* node,deleted_it)
 		delete node;
-	qDebug() << "mscene deleted";
-
 }
 
 Edge* MScene::findEdge(Node *source, Node *dest)
 {
-//поиск ребра по заданным вершинам
+    // Поиск ребра по заданным вершинам
 	foreach (Node* node, all_nodes)
 	{
 		if(node == source )
@@ -69,15 +67,15 @@ Node *MScene::addNode(QPointF position, QString value)
 	if(value.isEmpty())
 	{
 		int i = 0;
-		do		//цикл для вычисления уникального имени новой вершины
+        do		// Цикл для вычисления уникального имени новой вершины
 			value = QString::number(i++);
 		while(findNode(value));
 
 	}
-	Node * n = new Node(this,value); //создать вершину
+    Node * n = new Node(this,value); // Создать вершину
 	addItem(n);
 	n->setPos(position);
-	all_nodes << n; //добавить в список вершин
+    all_nodes << n; // Добавить в список вершин
 	performed_actions << MScene::smth_added;
 	return n;
 }
@@ -86,7 +84,7 @@ Edge *MScene::addEdge(Node *source, Node *dest,int val)
 {
     if(Node::isNodesConnected(source,dest))
 		return Q_NULLPTR;
-	//если уже соединены - остановить
+    // Если уже соединены - остановить
 
 	Edge * e = new Edge(source,dest,this, val);
 	addItem(e);
@@ -99,45 +97,43 @@ void MScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
 	QGraphicsScene::mouseDoubleClickEvent(event);
 
-	//определить, находится ли под мышью какой-либо объект
+    // Определить, находится ли под мышью какой-либо объект
 	QGraphicsItem* temp = itemAt(event->scenePos().x(),event->scenePos().y(), QTransform::fromScale(1,1) );
 
-	//если объекта нет - добавить вершину
+    // Если объекта нет - добавить вершину
 	if(event->button() == Qt::LeftButton && temp == Q_NULLPTR )
 			addNode(event->scenePos());
 }
 
 void MScene::connectTwoNodes()
 {
-//если выбран один элемент и этот элемент вершина - присвоить first эту вершину
+    // Если выбран один элемент и этот элемент вершина - присвоить first эту вершину
 	if(selectedItems().size() == 1 && selectedItems().last()->type() == Node::Type)
 		first = qgraphicsitem_cast<Node*>(selectedItems().first());
 
-//если выделено 2 элемента
+    // Если выделено 2 элемента
 	if(selectedItems().size() == 2 && QApplication::keyboardModifiers() == Qt::ShiftModifier )
 	{
-		//присваиваем второму элементу оставшийся выделенный
+        // Присваиваем второму элементу оставшийся выделенный
 		second = (first==selectedItems().last()) ? selectedItems().first() : selectedItems().last();
 
 
 		if(second->type() != Node::Type || first->type() != Node::Type)
 		{
-			//если тип второго элемента не вершина - выйти
-
+            // Если тип второго элемента не вершина - выйти
 			clearSelection();
 			return;
 		}
 
         if (Node::isNodesConnected(first,(Node*)second))
 		{
-	//если вершины уже соединены - выйти
+            // Если вершины уже соединены - выйти
 			clearSelection();
 			second->setSelected(true);
 			return;
 		}
-		//создать ребро
+        // Создать ребро
 		addEdge(first,(Node*)second);
-
 		clearSelection();
 		second->setSelected(true);
 	}
@@ -145,34 +141,33 @@ void MScene::connectTwoNodes()
 
 void MScene::setColorOfSelectedNodes()
 {
-	//получение цвета специальным диалоговым окном
+    // Получение цвета специальным диалоговым окном
     QColor color = QColorDialog::getColor(QColor(255,235,0),parent,QString("Цвет вершины"));
 	if(!color.isValid())
 		return;
-
 	foreach (QGraphicsItem* node, selectedItems())
 	{
-		//окрасить все вершины
+        // Окрасить все вершины
 		if(node->type() == Node::Type)
 			((Node*)node)->setColor(color);
 	}
-	clearSelection(); //снять выделение
+    clearSelection(); // Снять выделение
 }
 
 void MScene::removeSelectedNodes()
 {
-	//сначала удаляются все выделенные ребра
+    // Сначала удаляются все выделенные ребра
 	foreach (QGraphicsItem* edge, selectedItems())
 		if(edge->type() == Edge::Type)
 			((Edge*)edge)->remove();
 
-	//далее удаляются все выделенные вершины (и связанные с ними невыделенные ребра)
+    // Далее удаляются все выделенные вершины (и связанные с ними невыделенные ребра)
 	foreach (QGraphicsItem* node, selectedItems())
 		if(node->type() == Node::Type)
 			((Node*)node)->remove();
 }
 
-//создание графа из списка инцидентности (расположение автоматически по кругу)
+// Создание графа из списка инцидентности (расположение автоматически по кругу)
 void MScene::createGraphWithText(QList<QString> &nodes, QList<QStringList> &child_of_nodes)
 {
 
@@ -183,7 +178,7 @@ void MScene::createGraphWithText(QList<QString> &nodes, QList<QStringList> &chil
 	deleted_it.clear();
 	performed_actions.clear();
 
-	QList<QString> all_n; //все вершины
+    QList<QString> all_n; // Все вершины
 	for (int i = 0; i < nodes.size();i++)
 		if(!all_n.contains(nodes[i]))
 				all_n << nodes[i];
@@ -194,14 +189,14 @@ void MScene::createGraphWithText(QList<QString> &nodes, QList<QStringList> &chil
 
 
 	int radius = 200;
-	double segments = (TwoPi)/all_n.size(); //вычисление радиуса для расстановки по кругу
+    double segments = (TwoPi)/all_n.size(); // Вычисление радиуса для расстановки по кругу
 	if (all_n.size() >= 16)
 		radius = all_n.size()*70/6;
 	double current_angle = 0;
 
 	foreach(QString str,all_n)
 	{
-	//создание всех вершин и размещение их по кругу
+        // Создание всех вершин и размещение их по кругу
 		QPointF pos(radius*cos(current_angle),radius*sin(current_angle));
 		addNode(pos,str);
 		current_angle += segments;
@@ -209,15 +204,15 @@ void MScene::createGraphWithText(QList<QString> &nodes, QList<QStringList> &chil
 
 	for (int i = 0; i < nodes.size(); i++)
 	{
-		Node * a = findNode(nodes[i]); //ищем элемент
+        Node * a = findNode(nodes[i]); // Ищем элемент
 		for(int k = 0; k < child_of_nodes[i].size(); k++)
 		{
-			//ищем детей a
+            // Ищем детей a
 			Node* b = findNode(child_of_nodes[i][k]);
 
-			if (a && b) //елси найдены
+            if (a && b) // Елси найдены
 			{
-                if (!Node::isNodesConnected(a,b)) //не соединены - добавить соединение
+                if (!Node::isNodesConnected(a,b)) // Не соединены - добавить соединение
 					addEdge(a, b);
 			}
 			else
@@ -228,7 +223,7 @@ void MScene::createGraphWithText(QList<QString> &nodes, QList<QStringList> &chil
 
 Node* MScene::findNode(QString val)
 {
-	//поиск вершины по значению
+    // Поиск вершины по значению
 	foreach (Node* node, all_nodes)
 		if(node->getValue() == val)
 			return node;
@@ -237,7 +232,7 @@ Node* MScene::findNode(QString val)
 
 void MScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-//для отмены снятия выделение при зажатом шифте
+    // Для отмены снятия выделение при зажатом шифте
 	QGraphicsItem* temp = itemAt(event->scenePos().x(),event->scenePos().y(), QTransform::fromScale(1,1) );
 	if(event->modifiers() == Qt::ShiftModifier && temp)
 		temp->setSelected(true);
@@ -251,10 +246,10 @@ void MScene::copySelectedNodes(Node *startNode)
 	copy_e.clear();
 
 	if(startNode)
-		copy_n << startNode; //первым заносим стартовую вершину,
-							//относительно которой будет вставка
+        copy_n << startNode; // Первым заносим стартовую вершину,
+                             // относительно которой будет вставка
 
-	//заполнение копируемых вершин
+    // Заполнение копируемых вершин
 	foreach (QGraphicsItem* it, selectedItems()) {
 		if(it->type() == Node::Type)
 		{
@@ -263,7 +258,7 @@ void MScene::copySelectedNodes(Node *startNode)
 		}
 	}
 
-	//заполнение копируемых ребер
+    // Заполнение копируемых ребер
 	foreach (QGraphicsItem* it, selectedItems()) {
 		if(it->type() == Edge::Type)
 		{
@@ -275,16 +270,15 @@ void MScene::copySelectedNodes(Node *startNode)
 		}
 	}
 	clearSelection();
-
 }
 
-//контекстное меню сцены
+// Контекстное меню сцены
 void MScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	QGraphicsScene::contextMenuEvent(event);
 	QGraphicsItem * it =itemAt(event->scenePos(), QTransform::fromScale(1,1) );
 
-	if(it == Q_NULLPTR) //меню вызвается если под курсором нет объекта
+    if(it == Q_NULLPTR) // Меню вызвается если под курсором нет объекта
 	{
 		QMenu menu;
 			QAction * paste_action = menu.addAction("Вставить");
@@ -295,70 +289,26 @@ void MScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 }
 
-
 void MScene::paste(QPointF p)
 {
 	if(copy_n.isEmpty())
 		return;
 	clearSelection();
 
-	QPointF offset = p - copy_n.first()->scenePos(); //вычисляем смещение
+    QPointF offset = p - copy_n.first()->scenePos(); // Вычисляем смещение
 
 	QList<Node*> temp_n;
 	foreach (Node* node, copy_n) {
-		temp_n << addNode(node->scenePos() + offset); //добавляем вершины со смещением
+        temp_n << addNode(node->scenePos() + offset); // Добавляем вершины со смещением
 		temp_n.last()->setColor(node->getColor());
 	}
 
 	foreach (Edge* ed, copy_e) {
-		int a = copy_n.indexOf(ed->sourceNode()); //добавляем связи
-		int b = copy_n.indexOf(ed->destNode());	//у новых вершин
+        int a = copy_n.indexOf(ed->sourceNode()); // Добавляем связи
+        int b = copy_n.indexOf(ed->destNode());	  // у новых вершин
 		addEdge(temp_n.at(a),temp_n.at(b),ed->getValue());
 	}
 
-	foreach (Node* n, temp_n) //выделяем вставленное
+    foreach (Node* n, temp_n) //Выделяем вставленное
 		n->setSelected(true);
-
-}
-
-void MScene::undo()
-{
-	if(performed_actions.isEmpty())
-		return;
-	action act= performed_actions.last();
-	performed_actions.pop_back();
-
-
-	if(act == smth_delted)
-	{
-		QGraphicsItem* it = deleted_it.last();
-		deleted_it.pop_back();
-		if(it->type() == Node::Type)
-		{
-			addItem(it);
-			all_nodes << (Node*)it;
-		}
-		if(it->type() == Edge::Type)
-		{
-			Edge * e = qgraphicsitem_cast<Edge *> (it);
-
-			e->destNode()->addEdge(e);
-			e->sourceNode()->addEdge(e);
-			e->sourceNode()->addChild(e->destNode());
-
-			addItem(e);
-			e->adjust();
-
-		}
-
-	}
-	if(act == smth_added)
-	{
-		QGraphicsItem* it = items().last();
-		performed_actions << MScene::smth_added;
-		if(it->type() == Node::Type)
-			((Node*)it)->remove();
-		if(it->type() == Edge::Type)
-			((Edge*)it)->remove();
-	}
 }

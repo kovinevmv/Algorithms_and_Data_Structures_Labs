@@ -1,18 +1,19 @@
 #include "qcompressor.h"
 #include <QString>
 
+// Функция сжатия данных
 bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
 {
-    // Prepare output
+    // Очистка массива
     output.clear();
 
-    // Is there something to do?
+    // Проверка на пустоту входной строки
     if(input.length())
     {
-        // Declare vars
+
         int flush = 0;
 
-        // Prepare deflater status
+        // Переменные статуса deflater
         z_stream strm;
         strm.zalloc = Z_NULL;
         strm.zfree = Z_NULL;
@@ -20,62 +21,52 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
         strm.avail_in = 0;
         strm.next_in = Z_NULL;
 
-        // Initialize deflater
+        // Инициализация deflater
         int ret = deflateInit2(&strm, qMax(-1, qMin(9, level)), Z_DEFLATED, GZIP_WINDOWS_BIT, 8, Z_DEFAULT_STRATEGY);
 
         if (ret != Z_OK)
             return(false);
 
-        // Prepare output
+
         output.clear();
 
-        // Extract pointer to input data
         char *input_data = input.data();
         int input_data_left = input.length();
 
-        // Compress data until available
+        // Сжатие данных, пока возможно
         do {
-            // Determine current chunk size
+
+            // Определим размер chunck
             int chunk_size = qMin(GZIP_CHUNK_SIZE, input_data_left);
 
-            // Set deflater references
             strm.next_in = (unsigned char*)input_data;
             strm.avail_in = chunk_size;
 
-            // Update interval variables
             input_data += chunk_size;
             input_data_left -= chunk_size;
 
-            // Determine if it is the last chunk
+            // Проверка на последний chunck
             flush = (input_data_left <= 0 ? Z_FINISH : Z_NO_FLUSH);
 
-            // Deflate chunk and cumulate output
+            // Сжатие chunck
             do {
 
-                // Declare vars
                 char out[GZIP_CHUNK_SIZE];
-
-                // Set deflater references
                 strm.next_out = (unsigned char*)out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
-
-                // Try to deflate chunk
                 ret = deflate(&strm, flush);
 
-                // Check errors
+                // Проверка ошибок
                 if(ret == Z_STREAM_ERROR)
                 {
-                    // Clean-up
+                    // Очистка
                     deflateEnd(&strm);
-
-                    // Return
                     return(false);
                 }
 
-                // Determine compressed size
+                // Определим размер сжатого chunck
                 int have = (GZIP_CHUNK_SIZE - strm.avail_out);
 
-                // Cumulate result
                 if(have > 0)
                     output.append((char*)out, have);
 
@@ -83,25 +74,24 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
 
         } while (flush != Z_FINISH);
 
-        // Clean-up
         (void)deflateEnd(&strm);
-
-        // Return
         return(ret == Z_STREAM_END);
     }
     else
         return(true);
 }
 
+
+// Функция декомпрессии данных
 bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
 {
-    // Prepare output
+    // Очистка массива
     output.clear();
 
-    // Is there something to do?
+    // Проверка на пустоту входной строки
     if(input.length() > 0)
     {
-        // Prepare inflater status
+        // Переменные статуса deflater
         z_stream strm;
         strm.zalloc = Z_NULL;
         strm.zfree = Z_NULL;
@@ -109,63 +99,56 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
         strm.avail_in = 0;
         strm.next_in = Z_NULL;
 
-        // Initialize inflater
+        // Инициализация inflater
         int ret = inflateInit2(&strm, GZIP_WINDOWS_BIT);
 
         if (ret != Z_OK)
             return(false);
 
-        // Extract pointer to input data
         char *input_data = input.data();
         int input_data_left = input.length();
 
-        // Decompress data until available
+        // Декомпрессия, пока возможно
         do {
-            // Determine current chunk size
+
+             // Определим размер chunck
             int chunk_size = qMin(GZIP_CHUNK_SIZE, input_data_left);
 
-            // Check for termination
+             // Проверка на последний chunck
             if(chunk_size <= 0)
                 break;
 
-            // Set inflater references
             strm.next_in = (unsigned char*)input_data;
             strm.avail_in = chunk_size;
 
-            // Update interval variables
             input_data += chunk_size;
             input_data_left -= chunk_size;
 
-            // Inflate chunk and cumulate output
+             // Декомпрессия chunck
             do {
 
-                // Declare vars
                 char out[GZIP_CHUNK_SIZE];
 
-                // Set inflater references
                 strm.next_out = (unsigned char*)out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
 
-                // Try to inflate chunk
                 ret = inflate(&strm, Z_NO_FLUSH);
 
+                // Проверка ошибок
                 switch (ret) {
                 case Z_NEED_DICT:
                     ret = Z_DATA_ERROR;
                 case Z_DATA_ERROR:
                 case Z_MEM_ERROR:
                 case Z_STREAM_ERROR:
-                    // Clean-up
+                    // Очистка
                     inflateEnd(&strm);
-
-                    // Return
                     return(false);
                 }
 
-                // Determine decompressed size
+                // Определим размер chunck
                 int have = (GZIP_CHUNK_SIZE - strm.avail_out);
 
-                // Cumulate result
                 if(have > 0)
                     output.append((char*)out, have);
 
@@ -173,16 +156,14 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
 
         } while (ret != Z_STREAM_END);
 
-        // Clean-up
         inflateEnd(&strm);
-
-        // Return
         return (ret == Z_STREAM_END);
     }
     else
         return(true);
 }
 
+// Функция шифрования данных XOR
 QByteArray QCompressor::cryptData(QString a)
 {
     QString x;
@@ -194,13 +175,13 @@ QByteArray QCompressor::cryptData(QString a)
         x[i] = aa ^ kk;
     }
 
-
     QByteArray compressed;
     QCompressor::gzipCompress(x.toLatin1(), compressed);
 
     return compressed;
 }
 
+// Функция дешифрования данных XOR
 QString QCompressor::decryptData(QByteArray temp)
 {
 

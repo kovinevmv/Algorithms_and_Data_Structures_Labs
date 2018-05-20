@@ -11,89 +11,94 @@ namespace Ui
     class GraphWindow;
 }
 
-//окно  графа
+// Окно графа
 class GraphWindow : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit GraphWindow(QWidget *parent = 0);
-	~GraphWindow();
-	MScene * getMscene(); //сцена
+    explicit GraphWindow(QWidget *parent = 0); // Конструктор класса
+    ~GraphWindow();                            // Деструктор класса
 
-	bool createNewGraph(QString temp); //создать граф из списка инц.
-    bool createNewGraphWithFormat(QString); //создать форматированный граф из файла
-    bool createNewGraphWithNewFormat(QString);
-	void writePathSettings(QString str); //запись и чтение настроек о
-	QString readPathSettings();			 //пути сохранения и открытия
+    MScene * getMscene();                      // Сцена
+    bool getProcessing() const;                // Проверка работы программы
 
-	bool getProcessing() const;
-    QString textToGraphParse(QString ); // parse string
-    QString graphToTextParse();
+    bool createNewGraph(QString temp);         // Создать граф из списка инц.
+    bool createNewGraphWithFormat(QString);    // Создать форматированный граф из файла
+    bool createNewGraphWithNewFormat(QString); // Создать формат. граф из сжатого файла
+
+    void writePathSettings(QString str);       // Запись и чтение настроек о
+    QString readPathSettings();			       // пути сохранения и открытия
+
+    QString textToGraphParse(QString);         // Парсинг строки в граф
+    QString graphToTextParse();                // Парсинг графа с строку
 
 public slots:
-    void saveTextGraph();//текст
-    void openTextGraph();
 
-	void saveGraphWithFormat(); //форматир. граф
-    void openGraphWithFormat();
+    void saveTextGraph();             // Сохранить граф как текст
+    void saveGraphWithFormat();       // Сохранить граф как формат. файл
+    void saveGraphWithNewFormat();    // Сохранить граф как формат. сжатый файл
 
-    void saveGraphWithNewFormat();
-    void openGraphWithNewFormat();
+    void openTextGraph();             // Открыть граф как текст
+    void openGraphWithFormat();       // Открыть граф как формат. файл
+    void openGraphWithNewFormat();    // Открыть граф как формат. сжатый файл
 
-    bool createRandomGraph();
-    bool example1Graph();
-    bool example2Graph();
-	void stopAnim();  //остановить всю анимацию на сцене
+    bool createRandomGraph();         // Создание произвольного графа
+    bool example1Graph();             // Создание примеров графа
+    bool example2Graph();             // Создание примеров графа
 
-    void startSearchMaxFlow();
-    void stopAnimationButton();
+    void stopAnimationButton();   // Кнопка остановки анимации
+    void stopAnim();              // Остановить всю анимацию на сцене
+
+    void startSearchMaxFlow();    // Запуск поиска максимального потока
+
 
 private:
-	QList<QString> nodes;				//контейнеры с информацией
-	QList<QStringList> child_of_nodes;	//необходимой для создания
-										//форматированного графа из
-	QList<QPointF> points_of_nodes;		//файла типа .grph
-	QList<QColor> color_of_nodes;
-	QList<QStringList> values_of_edges; //
+    //Функция форматирования входных строк под один формат
+    QString add_spaces_and_simplifie(QString str_for_work);
 
-	bool processing; //выполняется ли алгоритм
-	int msec_delay;  //задержка в милисекундах
-	bool paused{false};
+    void setFormat();   //Установить форматирование графа (цвет и стиль ребер)
+    void clearFormat(); //Очистить форматирование графа (цвет и стиль ребер)
 
-	QString add_spaces_and_simplifie(QString str_for_work); //для форматирования входных строк под один формат
+    void writeSettings();	// Установка настроек пути файлов
+    void readSettings();
 
-	void setFormat();
-	void clearFormat(); //очистить форматирование графа (цвет и стиль ребер)
+    QList<QString> nodes;
+    QList<QStringList> child_of_nodes;	   // Контейнеры с информацией
+                                           // необходимой для создания
+    QList<QPointF> points_of_nodes;		   // форматированного графа из
+    QList<QColor> color_of_nodes;          // файла типа .grph
+    QList<QStringList> values_of_edges;
 
-	void writeSettings();	//установка настроек
-	void readSettings();
+    bool processing;              // Выполняется ли алгоритм
+    int  msec_delay;              // Задержка в милисекундах
+    bool paused {false};          // Пауза
 
-	int size;  //кол-во вершин
-	int **capacity; // Матрица пропускных способнотей
-	int ** flow;  // Матрица потока
-	int * pred;       // Массив пути
+    int size;        // Количество вершин
+    int **capacity;  // Матрица пропускных способнотей
+    int ** flow;     // Матрица потока
+    int * pred;      // Массив пути
 
-	bool bfs(int start,int end); //поиск в ширину
-	int max_flow(int source,int stock); //поиск макс. потока
+    bool bfs(int, int);       // Функция поиска в ширину
+    int max_flow(int, int);   // Функция поиск максимального потока
 
     Ui::GraphWindow *ui;
     QString log;
 
 private slots:
-    void showTextGraph(QString); //отобразить текстовое представление графа (список инцид.)
+    void showTextGraph(QString); // Отобразить текстовое представление графа (список инцид.)
 
-    void cleanGraph();  //очистить граф
+    void cleanGraph();  // Очистить граф
 
-	void showCreateHints(); //справка по созданию
-	void showTokHints();	//и по алгоритму макс. потока
+    void showCreateHints(); // Справка по созданию
+    void showTokHints();	// и по алгоритму макс. потока
 
-	void convertToUnoriented(); //перевести в неориентир.
-	void selectAll();			//выделить всё.
+    void convertToUnoriented(); // Перевести в неориентир.
+    void selectAll();			// Выделить всё
 
-	void maxFlowInit();  //инициализация алгоритма поиска макс. потока
+    void maxFlowInit();  // Инициализация алгоритма поиска макс. потока
 
 protected:
-	void closeEvent(QCloseEvent * event); //событие закрытия окна
+    void closeEvent(QCloseEvent * event); // Событие закрытия окна
 
 };
 

@@ -12,18 +12,17 @@ class MScene;
 class Node : public QGraphicsItem
 {
     public:
-        // Контсруктор класса Node
-        Node(MScene*,  QString val = "");
+        Node(MScene*,  QString val = "");  // Контсруктор класса Node
 
         QColor  getColor() const;     // Функиця, возвращающая цвет вершины
         QString getValue() const;     // Функиця, возвращающая имя вершины
 
-        void setColor(QColor);    // Установка цвета вершины
-        void setValue(QString);   // Установка имени вершины
+        void setColor(QColor);   // Установка цвета вершины
+        void setValue(QString);  // Установка имени вершины
 
-        void remove();                // Удаление вершины
+        void remove();           // Удаление вершины
 
-        void addChild(Node*);  // Добавление наследника (смежные вершины)
+        void addChild(Node*);    // Добавление наследника (смежные вершины)
         void addEdge(Edge*);     // Добавление ребра в список ребер
 
         // Соединены ли вершины

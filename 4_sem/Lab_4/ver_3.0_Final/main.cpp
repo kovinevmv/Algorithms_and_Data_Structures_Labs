@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QtWidgets>
 
+// Функция запуска загрузочной заставки
 void animation(QSplashScreen* splash)
 {
     QLabel splashlabel(splash);
@@ -15,8 +16,8 @@ void animation(QSplashScreen* splash)
     splash->setCursor(Qt::BlankCursor);
     for(int i=0;i<30000;i+=splashgif.speed())
     {
-    //    QCoreApplication::processEvents();
-    //    Sleep(splashgif.speed()/5);
+        QCoreApplication::processEvents();
+        Sleep(splashgif.speed()/5);
 
     }
 
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	a.setQuitOnLastWindowClosed(true);
 
+    // Запуск анимации
     QPixmap pix(":icons/3.gif");
     QSplashScreen splash(pix);
     animation(&splash);

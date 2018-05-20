@@ -12,21 +12,20 @@
 //окно с графом
 GraphWindow::GraphWindow(QWidget *parent) :
 	QWidget(parent),
-    processing(false),msec_delay(800), ui(new Ui::GraphWindow)
+    processing(false),msec_delay(600), ui(new Ui::GraphWindow)
 {
 
     ui->setupUi(this);
 
     ui->main_graph->setParent(this);
-	setAttribute(Qt::WA_DeleteOnClose, true); //удалять окно при его закрытии
-	readSettings(); //прочитать настройки с геометрией окна
+    setAttribute(Qt::WA_DeleteOnClose, true); // Удалять окно при его закрытии
+    readSettings(); // Прочитать настройки с геометрией окна
 
-    QString styleSheetMenu = "QMenu::separator {     height: 3px;     background: darkMagenta ;    "
-                             " margin-left: 12px;     margin-right: 6px; }";
+    QString styleSheetMenu = "QMenu::separator {height: 3px; background: darkMagenta; "
+                             "margin-left: 12px; margin-right: 6px;}";
 
 	QMenu * file =  new QMenu("Файл");
     file->setStyleSheet(styleSheetMenu);
-
 
     QMenu *simpleFile =  new QMenu("Простой файл");
     simpleFile->addAction("Открыть список (.txt)", this, SLOT(openTextGraph()), QKeySequence("Ctrl+Shift+S"));
@@ -34,39 +33,41 @@ GraphWindow::GraphWindow(QWidget *parent) :
     simpleFile->setStyleSheet(styleSheetMenu);
     file->addMenu(simpleFile);
 
-
     QMenu *formatredFile =  new QMenu("Форматированный файл");
     formatredFile->addAction("Открыть (.grph)", this, SLOT(openGraphWithFormat()), QKeySequence("Ctrl+Shift+F"));
     formatredFile->addAction("Сохранить (.grph)", this, SLOT(saveGraphWithFormat()),QKeySequence("Ctrl+F"));
     formatredFile->setStyleSheet(styleSheetMenu);
     file->addMenu(formatredFile);
 
-
     QMenu *newFormattedFile =  new QMenu("Новый форматированный файл");
     newFormattedFile->addAction("Открыть (.zgrph)", this, SLOT(openGraphWithNewFormat()), QKeySequence("Ctrl+Shift+Z"));
     newFormattedFile->addAction("Сохранить (.zgrph)", this, SLOT(saveGraphWithNewFormat()),QKeySequence("Ctrl+Z"));
     newFormattedFile->setStyleSheet(styleSheetMenu);
     file->addMenu(newFormattedFile);
-
     file->addSeparator();
-    file->addAction("Очистить все",this, SLOT(cleanGraph()));
     file->addAction("Выход",this,SLOT(close()));
 
+    QMenu* workWithGraph = new QMenu("Параметры");
+    workWithGraph->setStyleSheet(styleSheetMenu);
+    QAction* a  = workWithGraph->addAction("Копировать");
+    a->setShortcut(QKeySequence("Ctrl+C"));
+    connect(a, &QAction::triggered, [this](){getMscene()->copySelectedNodes();});
+    QAction* b  = workWithGraph->addAction("Вставить");
+    b->setShortcut(QKeySequence("Ctrl+V"));
+    connect(b, &QAction::triggered, [this](){getMscene()->paste();});
+
+    workWithGraph->addAction("Очистить все",this, SLOT(cleanGraph()));
 
     QMenu* flowFind = new QMenu("Максимальный поток");
     flowFind->setStyleSheet(styleSheetMenu);
     flowFind->addAction("Найти максимальный поток", this, SLOT(startSearchMaxFlow()), QKeySequence("F5"));
     flowFind->addAction("Очистка анимации", this, SLOT(stopAnimationButton()));
 
-
-
     QMenu* examples = new QMenu("Примеры");
     examples->setStyleSheet(styleSheetMenu);
     examples->addAction("Генерация", this, SLOT(createRandomGraph()), QKeySequence("Ctrl+G"));
     examples->addAction("Поток №1",  this, SLOT(example1Graph()));
     examples->addAction("Поток №2",  this, SLOT(example2Graph()));
-
-
 
     QMenu* info = new QMenu("Справка");
     info->setStyleSheet(styleSheetMenu);
@@ -76,6 +77,7 @@ GraphWindow::GraphWindow(QWidget *parent) :
 	QMenuBar * menuBar = new QMenuBar; //строка с меню
     menuBar->setStyleSheet("QMenuBar::item:selected {background: #606060;");
     menuBar->addMenu(file);
+    menuBar->addMenu(workWithGraph);
     menuBar->addMenu(flowFind);
     menuBar->addMenu(examples);
     menuBar->addMenu(info);
@@ -90,20 +92,6 @@ GraphWindow::~GraphWindow()
 	delete ui;
 }
 
-void GraphWindow::stopAnim()
-{
-
-	foreach (QGraphicsItem * it, getMscene()->items()) {
-		if(it->type() == Edge::Type)
-		{
-			//для каждого ребра остановить анимацию и обнулить текущий поток
-			((Edge*)it)->setAnimating(false);
-			((Edge*)it)->setCurrent(-1);
-		}
-	}
-	clearFormat();
-}
-
 bool GraphWindow::getProcessing() const
 {
 	return processing;
@@ -112,18 +100,17 @@ bool GraphWindow::getProcessing() const
 void GraphWindow::selectAll()
 {
 	foreach (QGraphicsItem * node, getMscene()->items()) {
-		node->setSelected(true); //выделить каждый элемент
+        node->setSelected(true); // Выделить каждый элемент
 	}
 }
 
 void GraphWindow::showTextGraph(QString x)
 {
     InformationDialog * out = new InformationDialog(x,this);
-	out->show(); //вывод строки со списком инцидентности
+    out->show(); // Вывод строки со списком инцидентности
 }
 
-
-void GraphWindow::saveTextGraph() //сохранение в текстовом виде
+void GraphWindow::saveTextGraph() // Сохранение в текстовом виде
 {
 	QString a;
     foreach (Node* node, *(ui->main_graph->getMscene()->nodesList())){
@@ -148,7 +135,7 @@ void GraphWindow::saveTextGraph() //сохранение в текстовом �
 	}
 }
 
-void GraphWindow::openTextGraph() //открыть обычный граф из списка инцидентности
+void GraphWindow::openTextGraph() // Открыть обычный граф из списка инцидентности
 {
     stopAnim();
     cleanGraph();
@@ -168,7 +155,7 @@ void GraphWindow::openTextGraph() //открыть обычный граф из 
     }
 }
 
-void GraphWindow::saveGraphWithFormat() //сохранение файла с форматированием (цвет, позиция, значения вершин и пропускных способностей)
+void GraphWindow::saveGraphWithFormat() // Сохранение файла с форматированием (цвет, позиция, значения вершин и пропускных способностей)
 {
     QString a = graphToTextParse();
 
@@ -190,7 +177,7 @@ void GraphWindow::saveGraphWithFormat() //сохранение файла с ф�
 	}
 }
 
-void GraphWindow::openGraphWithFormat() //открыть форматированный граф
+void GraphWindow::openGraphWithFormat() // Открыть форматированный граф
 {
     stopAnim();
     cleanGraph();
@@ -203,32 +190,20 @@ void GraphWindow::openGraphWithFormat() //открыть форматирова�
     show();
 }
 
-bool GraphWindow::createNewGraphWithFormat(QString file_name)
-{ //форматированный граф
-
+void GraphWindow::openGraphWithNewFormat() //открыть форматированный граф
+{
     stopAnim();
-    color_of_nodes.clear();
-	values_of_edges.clear();
-	points_of_nodes.clear();
-	QString temp;
-	QFile File(file_name);
-	if(File.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		temp = File.readAll();
-		File.close();
-	}
-	 else
-		return false;
+    cleanGraph();
+    QString FileName = QFileDialog::getOpenFileName(this, "Открыть файл...", readPathSettings(), "ZGraph file (*.zgrph)");
+    if (FileName.isEmpty())
+        return;
 
-    QString for_next = textToGraphParse(temp);
-	if(!createNewGraph(for_next))
-		return false;
-	setFormat();
-	return true;
-
+    writePathSettings(FileName);
+    createNewGraphWithNewFormat(FileName);
+    show();
 }
 
-void GraphWindow::saveGraphWithNewFormat() //сохранение файла с форматированием (цвет, позиция, значения вершин и пропускных способностей)
+void GraphWindow::saveGraphWithNewFormat() // Сохранение файла с форматированием (цвет, позиция, значения вершин и пропускных способностей)
 {
     stopAnim();
 
@@ -251,21 +226,96 @@ void GraphWindow::saveGraphWithNewFormat() //сохранение файла с 
     }
 }
 
+bool GraphWindow::createNewGraph(QString temp)
+{
+    stopAnim();
+    nodes.clear();
+    child_of_nodes.clear();
+    cleanGraph();
+    temp  = temp.trimmed();
+    QTextStream stream(&temp);
+    while(!stream.atEnd())
+    {
+        QString line = add_spaces_and_simplifie(stream.readLine(220));
+        if(line.isEmpty()) continue;
+
+        QStringList list = line.split(":");
+        if(list.first() == list.last()) return false;
+
+        QString t = list.first().trimmed();
+        nodes << t;
+
+        QString t2 = list.last().trimmed();
+        QStringList list_of_children = t2.split(" , ",QString::SkipEmptyParts);
+
+        child_of_nodes << list_of_children;
+    }
+    ui->main_graph->getMscene()->createGraphWithText(nodes,child_of_nodes);
+    return true;
+}
+
+bool GraphWindow::createNewGraphWithFormat(QString file_name)
+{ // Форматированный граф
+
+    stopAnim();
+    color_of_nodes.clear();
+    values_of_edges.clear();
+    points_of_nodes.clear();
+    QString temp;
+    QFile File(file_name);
+    if(File.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        temp = File.readAll();
+        File.close();
+    }
+     else
+        return false;
+
+    QString for_next = textToGraphParse(temp);
+    if(!createNewGraph(for_next))
+        return false;
+    setFormat();
+    return true;
+
+}
+
+bool GraphWindow::createNewGraphWithNewFormat(QString file_name)
+{
+    stopAnim();//форматированный граф
+    color_of_nodes.clear();
+    values_of_edges.clear();
+    points_of_nodes.clear();
+    QByteArray temp1;
+
+    QFile File(file_name);
+    if(File.open(QIODevice::ReadOnly))
+    {
+        temp1 = File.readAll();
+        File.close();
+    }
+     else
+        return false;
+    QString temp = QCompressor::decryptData(temp1);
+    QString for_next = textToGraphParse(temp);
+    if(!createNewGraph(for_next))
+        return false;
+    setFormat();
+    return true;
+
+}
 
 MScene* GraphWindow::getMscene(){
     return ui->main_graph->getMscene();
 }
 
-void GraphWindow::cleanGraph() //очистить граф
+void GraphWindow::cleanGraph() // Очистить граф
 {
-    //удалить все вершины (все связанные ребра удалятся тоже)
+    // Удалить все вершины (все связанные ребра удалятся тоже)
     foreach (Node* node, *(getMscene()->nodesList()))
         node->remove();
-
 }
 
-
-//установить форматирование
+// Установить форматирование
 void GraphWindow::setFormat()
 {
 	for (int i = 0; i < nodes.size(); i++)
@@ -273,7 +323,7 @@ void GraphWindow::setFormat()
 		Node * node = getMscene()->nodesList()->at(i);
 		node->setColor(color_of_nodes[i]);
 		node->setPos(points_of_nodes[i]);
-		int k =0;
+        int k = 0;
         foreach (Node * ch, *node->getChildren()) {
 			Edge * e = getMscene()->findEdge(node,ch);
 			if(e)
@@ -282,34 +332,6 @@ void GraphWindow::setFormat()
 		}
 		node->update();
 	}
-}
-
-bool GraphWindow::createNewGraph(QString temp)
-{
-    stopAnim();
-	nodes.clear();
-	child_of_nodes.clear();
-	cleanGraph();
-	temp  = temp.trimmed();
-	QTextStream stream(&temp);
-	while(!stream.atEnd())
-	{
-		QString line = add_spaces_and_simplifie(stream.readLine(220));
-		if(line.isEmpty()) continue;
-
-		QStringList list = line.split(":");
-		if(list.first() == list.last()) return false;
-
-		QString t = list.first().trimmed();
-		nodes << t;
-
-		QString t2 = list.last().trimmed();
-		QStringList list_of_children = t2.split(" , ",QString::SkipEmptyParts);
-
-		child_of_nodes << list_of_children;
-	}
-    ui->main_graph->getMscene()->createGraphWithText(nodes,child_of_nodes);
-	return true;
 }
 
 QString GraphWindow::add_spaces_and_simplifie(QString str_for_work)
@@ -369,7 +391,7 @@ void GraphWindow::showTokHints()
 
 void GraphWindow::convertToUnoriented()
 {
-	//создать ребро в другую сторону
+    // Создать ребро в другую сторону
 	foreach (Node * node, *getMscene()->nodesList()) {
         foreach(Node * child_node,*node->getChildren())
             if(!Node::isNodesConnected(child_node,node))
@@ -379,7 +401,7 @@ void GraphWindow::convertToUnoriented()
 
 void GraphWindow::clearFormat()
 {
-//очистить форматирование (цвета и стиль линий)
+    // Очистить форматирование (цвета и стиль линий)
 	foreach (QGraphicsItem * it, getMscene()->items()) {
 			if(it->type() == Node::Type)
                 ((Node*)it)->setColor(QColor(255,235,0));
@@ -397,44 +419,43 @@ void GraphWindow::closeEvent(QCloseEvent * event)
 {
 	if (processing)
 	{
-//если работает алгоритм - спросить, завершить ли его
+        // Если работает алгоритм - спросить, завершить ли его
 		int b = QMessageBox::question(this,"?","Алгоритм не завершил работу. Завершить принудительно?",QMessageBox::Yes,QMessageBox::No);
 		if(b == QMessageBox::Yes)
 		{
 			processing = false;
 			paused = false;
-			msec_delay = 1;
+            msec_delay = 1;
 		}
 		event->ignore();
 		return;
 	}
-//если алгоритм не работает - очистить анимацию и дать время на удаление.
+    // Если алгоритм не работает - очистить анимацию и дать время на удаление.
 	hide();
 	stopAnim();
 	writeSettings();
 	MScene::setDelay(1000);
 
 	event->accept();
-
 }
 
 void GraphWindow::maxFlowInit()
 {
-	stopAnim(); //остановка всей анимации
+    stopAnim(); // Остановка всей анимации
 
 	size = getMscene()->nodesList()->size();
 	if(size<=1)
 		return;
 
 	int st = getMscene()->nodesList()->indexOf(getMscene()->findNode("S"));
-	if(st==-1) //нет истока
+    if(st == -1) // Нет истока
 	{
 		QMessageBox::information(this,"!","Нет обозначенного истока S",QMessageBox::Ok);
 		return;
 	}
 
 	int fin = getMscene()->nodesList()->indexOf(getMscene()->findNode("T"));
-	if(fin==-1) //нет стока
+    if(fin == -1) // Нет стока
 	{
 		QMessageBox::information(this,"!","Нет обозначенного стока T",QMessageBox::Ok);
 		return;
@@ -443,20 +464,17 @@ void GraphWindow::maxFlowInit()
 	(*getMscene()->nodesList())[st]->setColor(QColor(180,0,0));
 	(*getMscene()->nodesList())[fin]->setColor(QColor(240,0,0));
 
-    ui->gridLayout->menuBar()->setDisabled(true); //отключить меню
-	msec_delay=800; //задержка на стандартные 800 мсек.
-	processing = true; //алгоритм работает
+    ui->gridLayout->menuBar()->setDisabled(true); // Отключить меню
+    msec_delay = 600;    // Задержка на стандартные 6800 мсек.
+    processing = true; //Алгоритм работает
 	paused = true;
 
-	//виджет для управления алгоритмом
+    //в Виджет для управления алгоритмом
 	QWidget * setup_widget = new QWidget(this);
-
 
     setup_widget->setAttribute(Qt::WA_DeleteOnClose);
     setup_widget->setWindowModality(Qt::NonModal);
-
     setup_widget->setGeometry(28, 55, 200, 80);
-
 
      QPushButton * pause_play_but = new QPushButton(setup_widget);
      pause_play_but->setIcon(QIcon(":/player/play.png"));
@@ -469,10 +487,9 @@ void GraphWindow::maxFlowInit()
      connect(one_step_but,&QPushButton::clicked,[=]() { msec_delay = 1; paused = false;
           QTimer::singleShot(1,[=](){paused = true; msec_delay = 5000;}); });
 
-      connect(pause_play_but,&QPushButton::toggled,[=](bool ch) {paused = !paused;
+     connect(pause_play_but,&QPushButton::toggled,[=](bool ch) {paused = !paused;
           one_step_but->setEnabled(ch ? 0 : 1); pause_play_but->setIcon(ch ? QIcon(":/player/pause.png")
            : QIcon(":/player/play.png")); pause_play_but->setToolTip(!ch ?  "Продолжить" :"Остановить"); });
-
 
       QLabel* head = new QLabel;
       head->setText("<center>Параметры воспроизведения</center>");
@@ -483,7 +500,6 @@ void GraphWindow::maxFlowInit()
       QLabel* step = new QLabel;
       step->setText("<center>След. шаг</center>");
 
-
       QGridLayout *vbox = new QGridLayout(setup_widget);
       vbox->addWidget(head, 0, 0, 1, 2);
       vbox->addWidget(play, 1, 0);
@@ -492,9 +508,7 @@ void GraphWindow::maxFlowInit()
       vbox->addWidget(one_step_but, 2, 1);
       vbox->setMargin(1);
 
-
-     setup_widget->setLayout(vbox);
-
+    setup_widget->setLayout(vbox);
     setup_widget->show();
 
 	capacity = new int *[size];
@@ -516,11 +530,11 @@ void GraphWindow::maxFlowInit()
 
 	pred = new int[size];
 
-	//заполнение матрицы пропускных способностей
-    QString zz = "Исходная матрица:\n";
+    // Заполнение матрицы пропускных способностей
+    QString matrixString = "Исходная матрица:\n";
     foreach (Node* n, *getMscene()->nodesList())
     {
-        zz += "[";
+        matrixString += "[";
 		int a = getMscene()->nodesList()->indexOf(n);
         foreach (Node* z, *getMscene()->nodesList())
         {
@@ -529,27 +543,24 @@ void GraphWindow::maxFlowInit()
 			if(e)
 				capacity[a][b] = e->getValue();
 
-            zz+= QString::number(capacity[a][b]) + " ";
+            matrixString+= QString::number(capacity[a][b]) + " ";
 		}
-        zz += "]\n";
+        matrixString += "]\n";
 
 	}
 
-    qDebug() << zz;
+    int m_flow= max_flow(st,fin); // Вычисление макс. потока
 
-	int m_flow= max_flow(st,fin); //вычисление макс. потока
-
-	if(processing) //если алгоритм не был прерван
+    if(processing) // Если алгоритм не был прерван
 	{
-
 		QMessageBox::information(this,"Максимальный поток","Максимальный поток в сток Т - " + QString::number(m_flow),QMessageBox::Ok);
 		processing = false;
 		foreach (QGraphicsItem * it, getMscene()->items()) {
 			if(it->type() == Edge::Type)
 			{
 				Edge* tmp = ((Edge*)it);
-				if(tmp->getCurrent() == 0) //если через ребро нет потока
-				{	//окрасить в серый пунктирной линией
+                if(tmp->getCurrent() == 0) // Если через ребро нет потока
+                {	// Окрасить в серый
 					tmp->setColor(Qt::lightGray);
 					tmp->setZValue(-4);
 				}
@@ -557,7 +568,7 @@ void GraphWindow::maxFlowInit()
 		}
 
 	}
-	else //если алгоритм прерван
+    else // Если алгоритм прерван
 	{
 			QMessageBox::information(this,"!","Сток в вершину T не найден",QMessageBox::Ok);
 			stopAnim();
@@ -566,18 +577,18 @@ void GraphWindow::maxFlowInit()
 
 	ui->gridLayout->menuBar()->setDisabled(false);
 
-    zz += log;
-    zz += "\nПреобразованная матрица\n";
+    matrixString += log;
+    matrixString += "\nПреобразованная матрица\n";
 	for(int i = 0; i < size; i++)
     {
-        zz += "[";
+        matrixString += "[";
         for (int j = 0; j < size; j++)
-            zz+= QString::number(flow[i][j]) + " ";
+            matrixString+= QString::number(flow[i][j]) + " ";
 
-        zz += "]\n";
+        matrixString += "]\n";
     }
 
-    showTextGraph(zz);
+    showTextGraph(matrixString);
 
 
     for(int i = 0; i < size; i++)
@@ -602,7 +613,7 @@ bool GraphWindow::bfs(int start,int end)
 
 	while(!qq.isEmpty() && processing)  // Пока хвост не совпадёт с головой
 	{
-		// вершина u пройдена
+        // Вершина u пройдена
 		int u = qq.first();
 		qq.pop_front();
 		is_visited[u] = true;
@@ -629,61 +640,50 @@ int GraphWindow::max_flow(int source, int stock)
     log.clear();
     log += "\nНачало алгоритма:\n-----------------------------------";
     int maxflow=0;            // Изначально нулевой
-    while(bfs(source,stock) && processing)             // Пока существует путь
+    while(bfs(source,stock) && processing)  // Пока существует путь
     {
         int delta = 10000000;
         for(int u = stock; pred[u] >= 0 && processing; u = pred[u]) // Найти минимальный поток в пути
-        {
             delta=qMin(delta, ( capacity[pred[u]][u] - flow[pred[u]][u] ) );
-            qDebug() << "Delta: " << delta << ", u: "<< u<< ", capacity[pred[u]][u]: "<< capacity[pred[u]][u]<< ", flow[pred[u]][u]: "<< flow[pred[u]][u]<< ", pred[u]: "<< pred[u];
-        }
+
 
         for(int u = stock; pred[u] >= 0 && processing; u=pred[u]) // По алгоритму Форда-Фалкерсона
         {
-
-
             Node * a = (*getMscene()->nodesList())[pred[u]];
             Node * b = (*getMscene()->nodesList())[u];
             Edge * e = getMscene()->findEdge(a,b);
 
-
-
-            log += "\nОбходим вершины: ";
-            log += a->getValue();
-            log += " и ";
-            log += b->getValue();
-            log += "\n";
-            log += "Предыдущее значение: ";
-            log += QString::number(e->getValue());
+            log += "\nОбходим вершины: " + a->getValue() + " и "+  b->getValue();
+            log += "\nПредыдущее значение: " + QString::number(e->getCurrent());
+            log += "\nИзменение потока: " + QString::number(delta);
 
             flow[pred[u]][u] += delta;
             flow[u][pred[u]] -= delta;
 
-            {//Графическое отображение
+            {   //Графическое отображение
 
-                //окрасить задействованные вершины
+                // Окрасить задействованные вершины
                 if(pred[u] != source && pred[u] != stock)
                         a->setColor(QColor(255,50,50));
                   if(u != source && u != stock)
                         b->setColor(QColor(255,50,50));
 
-                  e->setColor(QColor(180,0,0));//окрасить ребро
-                  if(!e->isAnimating()) //анимировать
+                  e->setColor(QColor(180,0,0)); // Окрасить ребро
+                  if(!e->isAnimating())         // Анимировать
                       e->setAnimating(true);
-                  e->setSelected(true); //выделить (жирным)
+                  e->setSelected(true);         // Выделить (жирным)
 
                 if(!e->setCurrent(flow[pred[u]][u])) //прервать алгоритм
-                    processing = false;				//при отриц. потоке
-
+                    processing = false;				 //при отриц. потоке
 
                 log += "\nНовое значение: ";
                 log += QString::number(e->getCurrent());
                 log += "\n-----------------------------------";
 
-                while(paused) //пауза
+                while(paused) // Пауза
                     QApplication::processEvents();
 
-                    MScene::setDelay(msec_delay); //задержка между шагами
+                    MScene::setDelay(msec_delay); // Задержка между шагами
 
 
                 e->setSelected(false);  //снять выделение
@@ -695,7 +695,7 @@ int GraphWindow::max_flow(int source, int stock)
                         b->setColor(QColor(255,235,0));
             }
         }
-        maxflow += delta;                       // Повышаем максимальный поток
+        maxflow += delta;  // Повышаем максимальный поток
     }
 
     log += "\nКонец алгоритма\n\n";
@@ -731,55 +731,29 @@ void GraphWindow::readSettings()
 	restoreGeometry(settings.value("geometry").toByteArray());
 }
 
-
 void GraphWindow::startSearchMaxFlow()
 {
     stopAnim();
     maxFlowInit();
 }
 
+void GraphWindow::stopAnim()
+{
+    foreach (QGraphicsItem * it, getMscene()->items())
+    {
+        if(it->type() == Edge::Type)
+        {
+            // Для каждого ребра остановить анимацию и обнулить текущий поток
+            ((Edge*)it)->setAnimating(false);
+            ((Edge*)it)->setCurrent(-1);
+        }
+    }
+    clearFormat();
+}
+
 void GraphWindow::stopAnimationButton()
 {
     stopAnim();
-}
-
-
-void GraphWindow::openGraphWithNewFormat() //открыть форматированный граф
-{
-    stopAnim();
-    cleanGraph();
-    QString FileName = QFileDialog::getOpenFileName(this, "Открыть файл...", readPathSettings(), "ZGraph file (*.zgrph)");
-    if (FileName.isEmpty())
-        return;
-
-    writePathSettings(FileName);
-    createNewGraphWithNewFormat(FileName);
-    show();
-}
-
-bool GraphWindow::createNewGraphWithNewFormat(QString file_name)
-{
-    stopAnim();//форматированный граф
-    color_of_nodes.clear();
-    values_of_edges.clear();
-    points_of_nodes.clear();
-    QByteArray temp1;
-
-    QFile File(file_name);
-    if(File.open(QIODevice::ReadOnly))
-    {
-        temp1 = File.readAll();
-        File.close();
-    }
-     else
-        return false;
-    QString temp = QCompressor::decryptData(temp1);
-    QString for_next = textToGraphParse(temp);
-    if(!createNewGraph(for_next))
-        return false;
-    setFormat();
-    return true;
-
 }
 
 bool GraphWindow::createRandomGraph()
@@ -798,45 +772,13 @@ bool GraphWindow::createRandomGraph()
                 QString::number(rand()%255) + " &%& " +  QString::number(rand()%20 + 1) + "\n";
     }
 
-    color_of_nodes.clear();
-    values_of_edges.clear();
-    points_of_nodes.clear();
+    QString for_next = textToGraphParse(x);
 
-    QString temp = x;
-    QString for_next;
-
-    QTextStream stream(&temp);
-    qreal a,b, c;
-    while(!stream.atEnd())
-    {
-        QString temp2 =add_spaces_and_simplifie( stream.readLine(220));
-        if (temp2.isEmpty())
-            continue;
-        QStringList list1 = temp2.split("&%&");
-        for_next.append(list1.first().trimmed() + "\n");
-
-        QTextStream temp3(&list1[1]);
-        temp3 >> a >> b;
-        points_of_nodes << QPointF(a,b);
-
-        temp3.setString(&list1[2]);
-        temp3 >> a >> b >> c;
-        color_of_nodes << QColor(a,b,c);
-
-        QString ee = list1[3].trimmed();
-        values_of_edges << ee.split(" ");
-        QString ss;
-        foreach (QString a, values_of_edges.back()) {
-            ss.append(a + " ");
-        }
-
-    }
     if(!createNewGraph(for_next))
         return false;
     setFormat();
     return true;
 }
-
 
 bool GraphWindow::example1Graph()
 {
@@ -917,7 +859,7 @@ QString GraphWindow::textToGraphParse(QString x)
 QString GraphWindow::graphToTextParse()
 {
     QString a;
-    //заполнение строки основной информацией
+    // Заполнение строки основной информацией
     foreach (Node* node, *(ui->main_graph->getMscene()->nodesList())){
         a << *node;
         a.append(" &%& " + QString::number(node->scenePos().x()) +
@@ -930,9 +872,7 @@ QString GraphWindow::graphToTextParse()
         foreach(Node* ch,*node->getChildren())
         {
             Edge * e = getMscene()->findEdge(node,ch);
-            a.append(e
-                        ? QString::number(e->getValue()) + " "
-                        : "0 ");
+            a.append(e ? QString::number(e->getValue()) + " " : "0 ");
 
         }
         a.append("\n");

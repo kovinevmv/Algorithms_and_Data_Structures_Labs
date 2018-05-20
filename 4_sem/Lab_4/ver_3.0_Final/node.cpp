@@ -93,6 +93,7 @@ void Node::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
         QAction *stok = menu.addAction("Установить как сток");
     menu.addSeparator();
         QAction *removeNode_state  = menu.addAction("Удалить вершину");
+        QAction *copy = menu.addAction("Копировать");
 
     QAction *selectedState = menu.exec(event->screenPos());
 
@@ -113,6 +114,8 @@ void Node::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		setValue("S");
     else if(selectedState == stok)
 		setValue("T");
+    else if (selectedState == copy)
+        scene->copySelectedNodes();
 
 	setSelected(false);
 
@@ -149,7 +152,7 @@ void Node::remove()
 	scene->performed_actions << MScene::smth_delted;
 }
 
-// Оператор<< для вершины
+// Оператор << для вершины
 QString& operator<<(QString & str, const Node & node)
 {
 	str.append(node.value + " : ");

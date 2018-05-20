@@ -68,8 +68,8 @@ void MGraphView::scaleView(qreal scaleFactor)
 
 void MGraphView::dragEnterEvent(QDragEnterEvent *event)
 {
-    if(event->mimeData()->hasText()) //если перетаскиваемый тип - текст
-        event->accept();			 //принять объект
+    if(event->mimeData()->hasText()) // Если перетаскиваемый тип - текст
+        event->accept();			 // принять объект
 	else
 		event->ignore();
 }
