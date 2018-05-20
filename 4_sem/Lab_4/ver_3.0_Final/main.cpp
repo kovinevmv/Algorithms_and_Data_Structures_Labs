@@ -1,9 +1,9 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <QTime>
 #include <QStyle>
 #include <QFile>
 #include <QtWidgets>
+#include "graphwindow.h"
 
 // Функция запуска загрузочной заставки
 void animation(QSplashScreen* splash)

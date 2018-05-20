@@ -30,7 +30,8 @@ InformationDialog::InformationDialog(const QString& strPath,const QString& strFi
 	ptxtBrowser->setSearchPaths(QStringList() << strPath);
     ptxtBrowser->setSource(QString("1.htm"));
 	ptxtBrowser->setSource(strFileName);
-	//Layout setup
+
+    //Layout setup
 	QVBoxLayout* pvbxLayout = new QVBoxLayout;
 	QHBoxLayout* phbxLayout = new QHBoxLayout;
 	phbxLayout->addWidget(pcmdBack);
@@ -41,7 +42,7 @@ InformationDialog::InformationDialog(const QString& strPath,const QString& strFi
 	setLayout(pvbxLayout);
 }
 
-//текстовое отображение
+// текстовое отображение
 InformationDialog::InformationDialog(const QString &text_view,QWidget * par)
 	:QWidget(par)
 {
@@ -49,7 +50,6 @@ InformationDialog::InformationDialog(const QString &text_view,QWidget * par)
 	setAttribute(Qt::WA_DeleteOnClose);
 	setWindowFlags(Qt::Window |Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
 	setWindowIcon(QIcon(":/icons/graph.png"));
-    //setFixedSize(300,400);
 
 	name = "text_view";
 	readSettings();
@@ -65,13 +65,14 @@ InformationDialog::InformationDialog(const QString &text_view,QWidget * par)
 	GraphWindow * p = dynamic_cast<GraphWindow*>(par); //родитель должен быть типа GraphWindow!
 
 	connect(saveButton,&QPushButton::clicked,[this,p]() //вопрос о сохранении графа
-												{
-													int b = QMessageBox::question(this,"Сохранить...","Сохранить граф с форматированием?",QMessageBox::Yes , QMessageBox::No,QMessageBox::Cancel);
-													if(b==QMessageBox::Yes)
-														p->saveGraphWithFormat();
-													else if(b==QMessageBox::No)
-														p->saveTextGraph();
-												});
+    {
+        int b = QMessageBox::question(this,"Сохранить...","Сохранить граф с форматированием?",
+                                      QMessageBox::Yes , QMessageBox::No,QMessageBox::Cancel);
+        if(b==QMessageBox::Yes)
+            p->saveGraphWithFormat();
+        else if(b==QMessageBox::No)
+            p->saveTextGraph();
+    });
 	connect(rejectButton,&QPushButton::clicked,this,&InformationDialog::close);
 
 	QGridLayout * lay = new QGridLayout;
