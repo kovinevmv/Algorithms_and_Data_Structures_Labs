@@ -42,7 +42,6 @@ public slots:
     void openGraphWithFormat();       // Открыть граф как формат. файл
     void openGraphWithNewFormat();    // Открыть граф как формат. сжатый файл
 
-    bool createRandomGraph();         // Создание произвольного графа
     bool example1Graph();             // Создание примеров графа
     bool example2Graph();             // Создание примеров графа
 

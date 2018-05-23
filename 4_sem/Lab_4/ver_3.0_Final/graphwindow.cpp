@@ -55,7 +55,6 @@ GraphWindow::GraphWindow(QWidget *parent) :
     QAction* b  = workWithGraph->addAction("Вставить");
     b->setShortcut(QKeySequence("Ctrl+V"));
     connect(b, &QAction::triggered, [this](){getMscene()->paste();});
-
     workWithGraph->addAction("Очистить все",this, SLOT(cleanGraph()));
 
     QMenu* flowFind = new QMenu("Максимальный поток");
@@ -65,7 +64,6 @@ GraphWindow::GraphWindow(QWidget *parent) :
 
     QMenu* examples = new QMenu("Примеры");
     examples->setStyleSheet(styleSheetMenu);
-    examples->addAction("Генерация", this, SLOT(createRandomGraph()), QKeySequence("Ctrl+G"));
     examples->addAction("Поток №1",  this, SLOT(example1Graph()));
     examples->addAction("Поток №2",  this, SLOT(example2Graph()));
 
@@ -563,6 +561,7 @@ void GraphWindow::maxFlowInit()
                 {	// Окрасить в серый
 					tmp->setColor(Qt::lightGray);
 					tmp->setZValue(-4);
+                    tmp->setStyle(Qt::DotLine);
 				}
 			}
 		}
@@ -604,14 +603,15 @@ void GraphWindow::maxFlowInit()
 
 bool GraphWindow::bfs(int start,int end)
 {
-	QVector<bool> is_visited(size);
+    QVector<bool> is_visited(size);
 	QVector<int> qq;
 
 	qq.push_back(start);
 	is_visited[start] = true;
 	pred[start] = -1;   // Специальная метка для начала пути
 
-	while(!qq.isEmpty() && processing)  // Пока хвост не совпадёт с головой
+
+    while(!qq.isEmpty() && processing)  // Пока хвост не совпадёт с головой
 	{
         // Вершина u пройдена
 		int u = qq.first();
@@ -619,12 +619,18 @@ bool GraphWindow::bfs(int start,int end)
 		is_visited[u] = true;
 		for(int v = 0; v < size; v++ ) // Смотрим смежные вершины
 		{
+
+
 			// Если не пройдена и не заполнена
-			if(!is_visited[v] && capacity[u][v] > flow[u][v]) {
+            if(!is_visited[v] && capacity[u][v] > flow[u][v])
+            {
 				qq.push_back(v);
 				is_visited[v] = true;
 				pred[v] = u; // Путь обновляем
 			}
+
+
+
 		}
 	}
 
@@ -644,8 +650,7 @@ int GraphWindow::max_flow(int source, int stock)
     {
         int delta = 10000000;
         for(int u = stock; pred[u] >= 0 && processing; u = pred[u]) // Найти минимальный поток в пути
-            delta=qMin(delta, ( capacity[pred[u]][u] - flow[pred[u]][u] ) );
-
+               delta=qMin(delta, ( capacity[pred[u]][u] - flow[pred[u]][u] ) );
 
         for(int u = stock; pred[u] >= 0 && processing; u=pred[u]) // По алгоритму Форда-Фалкерсона
         {
@@ -682,9 +687,7 @@ int GraphWindow::max_flow(int source, int stock)
 
                 while(paused) // Пауза
                     QApplication::processEvents();
-
-                    MScene::setDelay(msec_delay); // Задержка между шагами
-
+                MScene::setDelay(msec_delay); // Задержка между шагами
 
                 e->setSelected(false);  //снять выделение
                 e->setColor(Qt::black); //вернуть цвет ребру
@@ -754,30 +757,6 @@ void GraphWindow::stopAnim()
 void GraphWindow::stopAnimationButton()
 {
     stopAnim();
-}
-
-bool GraphWindow::createRandomGraph()
-{
-    stopAnim();
-    srand(time(NULL));
-    QString x = "";
-
-    int size = rand() % 10 + 3;
-
-    for (int i = 0; i < size; i++)
-    {
-        x+= QString::number(i) + " : " + QString::number(rand() % size) + " &%& "+
-                QString::number(rand()%600-300) + " " + QString::number(rand()%600-300) + " &%& " +
-                QString::number(rand()%255) + " " +  QString::number(rand()%255) + " " +
-                QString::number(rand()%255) + " &%& " +  QString::number(rand()%20 + 1) + "\n";
-    }
-
-    QString for_next = textToGraphParse(x);
-
-    if(!createNewGraph(for_next))
-        return false;
-    setFormat();
-    return true;
 }
 
 bool GraphWindow::example1Graph()

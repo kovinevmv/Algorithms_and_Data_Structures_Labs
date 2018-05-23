@@ -144,7 +144,7 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     //-----------------------------------------------------------------------------
 
 
-    // Отрисовкаа конечной стрелки
+    // Отрисовка конечной стрелки
     double ar_ang = ::acos(line.dx() / line.length());
     if(line.dy() >= 0)
 		ar_ang = TwoPi - ar_ang;
