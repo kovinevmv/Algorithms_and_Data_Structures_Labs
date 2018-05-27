@@ -1,0 +1,9 @@
+# Ignore object and archive files
+*.[oa]
+
+
+# Ignore temporary files
+~
+
+# Ignore build folder
+build/
