@@ -1,0 +1,7 @@
+generate: struct.h generate.o rwBitmap.o
+	gcc generate.o -o  generate_main.out rwBitmap.o
+	rm *.o
+generate.o: generate.c struct.h
+	gcc -c generate.c
+rwBitmap.o: rwBitmap.c rwBitmap.h struct.h
+	gcc -c rwBitmap.c

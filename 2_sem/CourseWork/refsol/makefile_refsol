@@ -1,0 +1,7 @@
+refsol: struct.h refsol.o rwBitmap.o
+	gcc refsol.o -o refsol_main.out rwBitmap.o
+	rm *.o
+refsol.o: refsol.c struct.h
+	gcc -c refsol.c
+rwBitmap.o: rwBitmap.c rwBitmap.h struct.h
+	gcc -c rwBitmap.c
