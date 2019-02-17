@@ -1,5 +1,7 @@
 # ProgrammingLETI6304
 
+![MEM](docs/mem.png)
+
 ## Список лабораторных работ:
 
 ### 1 семестр:
