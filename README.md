@@ -1,6 +1,6 @@
 # ProgrammingLETI6304
 
-![MEM](docs/mem.png)
+![MEM](docs/mem.jpg)
 
 ## Список лабораторных работ:
 
