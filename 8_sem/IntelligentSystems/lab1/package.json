@@ -1,0 +1,9 @@
+{
+  "name": "lab1",
+  "version": "1.0.0",
+  "dependencies": {
+    "@flatten-js/core": "^1.1.0",
+    "fmin": "0.0.2",
+    "lodash": "^4.17.15"
+  }
+}
