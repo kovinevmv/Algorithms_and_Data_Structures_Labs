@@ -2,33 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e83d8b1-3c94-41ac-ae22-374a1bc55589" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/lab1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/agent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/flags.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/locator.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/msg.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/run_monitor.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/run_server.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab1/socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab2/src/agent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab2/src/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab2/src/msg.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab2/src/socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run/run_goalie.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run/run_player.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automat_logic/automat/Edge.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automat_logic/automat/Node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automat_logic/settings/goalie_pref.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automat_logic/settings/player_pref.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/automat_logic/types/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lab6/src/config/team_config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +100,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585837411420</updated>
-      <workItem from="1585837412576" duration="14253000" />
+      <workItem from="1585837412576" duration="16191000" />
     </task>
     <servers />
   </component>
