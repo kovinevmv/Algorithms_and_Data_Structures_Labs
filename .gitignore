@@ -1,2 +1,4 @@
 *.user
-*/.idea/*
+*idea/
+node_modules/
+run/logs/
