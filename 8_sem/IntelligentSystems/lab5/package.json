@@ -1,0 +1,23 @@
+{
+  "name": "lab5",
+  "version": "1.0.0",
+  "dependencies": {
+    "@flatten-js/core": "^1.1.0",
+    "@oclif/command": "^1.5.19",
+    "fmin": "0.0.2",
+    "lodash": "^4.17.15"
+  },
+  "files": [
+    "./src"
+  ],
+  "prettier": {
+    "semi": false,
+    "trailingComma": "es5",
+    "arrowParens": "always",
+    "singleQuote": true
+  },
+  "scripts": {
+    "run": "node src/app.js",
+    "debug": "node --inspect src/app.js"
+  }
+}
