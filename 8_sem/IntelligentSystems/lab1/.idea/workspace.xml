@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ccfebdcb-2b5f-47be-89de-822a5538a877" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/lab1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flags.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/locator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/msg.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_monitor.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_server.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/socket.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1ZzFS1m36RvjA58q4Fs6PsRs9K4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.19.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab2" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunManager" selected="Node.js.app.js">
+    <configuration name="app.js" type="NodeJSConfigurationType" singleton="false" temporary="true" nameIsGenerated="true" path-to-js-file="app.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="run_monitor.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/run_monitor.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_server.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/run_server.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.app.js" />
+      <item itemvalue="Shell Script.run_monitor.sh" />
+      <item itemvalue="Shell Script.run_server.sh" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.app.js" />
+        <item itemvalue="Shell Script.run_monitor.sh" />
+        <item itemvalue="Shell Script.run_server.sh" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ccfebdcb-2b5f-47be-89de-822a5538a877" name="Default Changelist" comment="" />
+      <created>1585834012299</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585834012299</updated>
+      <workItem from="1585834014461" duration="1841000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="559" y="148" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585835383207">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="559" y="148" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585835383207" />
+    <state x="674" y="358" width="628" height="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585834380449">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="674" y="358" width="628" height="404" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585834380449" />
+    <state x="1239" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1585835854343">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="1239" y="311" width="424" height="491" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1585835854343" />
+    <state width="904" height="321" key="GridCell.Tab.0.bottom" timestamp="1585835855154">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="904" height="321" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585835855154" />
+    <state width="904" height="321" key="GridCell.Tab.0.center" timestamp="1585835855154">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="904" height="321" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585835855154" />
+    <state width="904" height="321" key="GridCell.Tab.0.left" timestamp="1585835855154">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="904" height="321" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585835855154" />
+    <state width="904" height="321" key="GridCell.Tab.0.right" timestamp="1585835855154">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="904" height="321" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585835855154" />
+    <state x="287" y="289" width="1022" height="737" key="SettingsEditor" timestamp="1585835372937">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="287" y="289" width="1022" height="737" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1585835372937" />
+  </component>
+</project>
