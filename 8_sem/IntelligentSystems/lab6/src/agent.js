@@ -65,6 +65,7 @@ class Agent {
                     this.act = {n: act.n, v: act.v};
                     this.steps.push(this.act)
                 } else if (act.isSave === -1) {
+                    console.log(`Stack: ${this.steps.length}`);
                     this.steps.pop()
                 } else {
                     this.act = act

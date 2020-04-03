@@ -198,7 +198,7 @@ const actions = {
         return this.ta.make_msg('catch', this.ta.data.ball.a)
     },
     kickBall() {
-        console.log("Kick to catch");
+        console.log("Kick ball");
 
         this.ta.next = true;
         const {angle} = this.ta.mgr.vectorTo(this.ta.local.oppositeGoal);

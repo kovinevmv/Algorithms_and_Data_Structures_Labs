@@ -31,15 +31,15 @@ const CTRL_MIDDLE = {
                 }
             }
         }
-        return {n: "turn", v: 45, isSave: false}
+        return {n: "turn", v: 45, isSave: true};
     },
     seekBall(input) {
         if (!input.ball) {
             this.action = "actionReturnArrack";
-            return {n: "turn", v: 45, isSave: false};
+            return {n: "turn", v: 45, isSave: true};
         }
         else {
-            return {n: "turn", v: input.ball.angle, isSave: false}
+            return {n: "turn", v: input.ball.angle, isSave: true};
         }
     },
 };

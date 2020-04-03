@@ -4,15 +4,6 @@ class Edge {
     get name() {
         return `${this.from_name} -> ${this.to_name}`
     }
-
-    /**
-     * @static
-     * @param {String} obj.to
-     * @param {Function?} obj.guard
-     * @param {String?} obj.sync
-     * @param {Function?} obj.assign
-     * @return {Edge} [TODO:description]
-     */
     static extend(obj) {
         return _.extend(new Edge(), obj)
     }

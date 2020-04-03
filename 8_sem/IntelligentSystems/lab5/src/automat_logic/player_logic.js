@@ -157,10 +157,11 @@ const actions = {
     runWithSlowdown() {
         this.ta.local.target = this.ta.data.ball;
         this.ta.local.setNext = true;
+        var l =  (this.ta.local.vectorToBall && this.ta.local.vectorToBall.length) ? this.ta.local.vectorToBall.length: 1;
         this.ta.local.speed = this.ta.mgr.get_slowdown(
             this.ta.s.slowdown.startSpeed,
             this.ta.s.slowdown.endSpeed,
-            this.ta.local.vectorToBall.length,
+            l,
             this.ta.s.slowdown.start
         );
         return this.ta.actions.runToTarget()
