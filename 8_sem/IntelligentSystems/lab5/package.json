@@ -5,7 +5,7 @@
     "@flatten-js/core": "^1.1.0",
     "@oclif/command": "^1.5.19",
     "fmin": "0.0.2",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   },
   "files": [
     "./src"
